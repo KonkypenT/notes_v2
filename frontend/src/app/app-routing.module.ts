@@ -1,0 +1,75 @@
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ROUTING_NAME } from './shared/consts/routing.const';
+import { HomePage } from './home/home.page';
+import { FriendsPage } from './home/friends/friends.page';
+
+const routes: Routes = [
+  {
+    path: ROUTING_NAME.auth,
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
+  },
+  {
+    path: '',
+    redirectTo: `/${ROUTING_NAME.home}/${ROUTING_NAME.groupList}`,
+    pathMatch: 'full',
+  },
+  {
+    path: ROUTING_NAME.register,
+    loadChildren: () => import('./register/register.module').then((m) => m.RegisterPageModule),
+  },
+  {
+    path: ROUTING_NAME.home,
+    component: HomePage,
+    children: [
+      {
+        path: ROUTING_NAME.groupList,
+        loadChildren: () =>
+          import('./home/group-list/group-list-routing.module').then((m) => m.GroupListPageRoutingModule),
+      },
+      {
+        path: ROUTING_NAME.profile,
+        loadChildren: () => import('./home/profile/profile.module').then((m) => m.ProfilePageModule),
+      },
+      {
+        path: ROUTING_NAME.friends,
+        component: FriendsPage,
+        children: [
+          {
+            path: ROUTING_NAME.myFriends,
+            children: [
+              {
+                path: '',
+                loadChildren: () =>
+                  import('./home/friends/my-friends/my-friends.module').then((m) => m.MyFriendsPageModule),
+              },
+            ],
+          },
+          {
+            path: ROUTING_NAME.myApplications,
+            loadChildren: () =>
+              import('./home/friends/my-applications/my-applications.module').then((m) => m.MyApplicationsPageModule),
+          },
+          {
+            path: ROUTING_NAME.applicationsToMe,
+            loadChildren: () =>
+              import('./home/friends/applications-to-me/applications-to-me.module').then(
+                (m) => m.ApplicationsToMePageModule,
+              ),
+          },
+          {
+            path: '',
+            redirectTo: `/${ROUTING_NAME.home}/${ROUTING_NAME.friends}/${ROUTING_NAME.myFriends}`,
+            pathMatch: 'full',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

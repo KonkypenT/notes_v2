@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Друзья</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="150" (ionRefresh)="getDataForPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="applications?.length" #listFriend>
+    <ion-item-sliding *ngFor="let user of applications">
+      <ion-item class="item">
+        <ion-label slot="start">{{user.firstName}} {{user.surname}}</ion-label>
+        <ion-label slot="end">{{user.username}}</ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click)="addToFriend(user)">Принять заявку в друзья</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

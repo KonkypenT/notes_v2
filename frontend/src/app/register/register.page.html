@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Назад"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Регистрация</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Назад"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large">Регистрация</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <form class="form" [formGroup]="formRegister">
+      <ion-item>
+        <ion-label position="floating">Имя</ion-label>
+        <ion-input [formControl]="formRegister.controls.firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Фамилия</ion-label>
+        <ion-input [formControl]="formRegister.controls.surname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input type="email" [formControl]="formRegister.controls.email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Логин</ion-label>
+        <ion-input [formControl]="formRegister.controls.username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Пароль</ion-label>
+        <ion-input type="password" [formControl]="formRegister.controls.password"></ion-input>
+      </ion-item>
+      <div class="error-content"><small>{{ registerError }}</small></div>
+      <ion-button expand="full" [disabled]="formRegister.invalid" (click)="register()">Зарегистрироваться</ion-button>
+    </form>
+  </div>
+</ion-content>

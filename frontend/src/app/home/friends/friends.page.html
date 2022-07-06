@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Друзья</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button [tab]="routingName.myFriends">
+        <ion-icon name="accessibility"></ion-icon>
+        <ion-label>Мои друзья</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button [tab]="routingName.myApplications">
+        <ion-icon name="person-add"></ion-icon>
+        <ion-label>Добавить друзей</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button [tab]="routingName.applicationsToMe">
+        <ion-icon name="people"></ion-icon>
+        <ion-label>Заявки в друзья</ion-label>
+        <ion-badge>{{countApplication | async}}</ion-badge>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

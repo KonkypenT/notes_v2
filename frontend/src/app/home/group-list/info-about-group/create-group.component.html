@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Создание группы</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="form" [formGroup]="form">
+    <ion-item>
+      <ion-label position="stacked">Название группы</ion-label>
+      <ion-input [formControl]="form.controls.title"></ion-input>
+    </ion-item>
+    <ion-button expand="full" [disabled]="form.invalid" (click)="createGroup()">Создать группу</ion-button>
+  </form>
+</ion-content>

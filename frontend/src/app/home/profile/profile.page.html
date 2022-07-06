@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Назад"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Профиль</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Назад"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large">Профиль</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <form class="form" [formGroup]="form">
+      <ion-avatar *ngIf="(currentUser | async) as user">
+        <img *ngIf="user.photo" [src]="user.photo" />
+        <div *ngIf="!user.photo" class="fake-photo" [attr.data-name]="user.firstName[0] + user.surname[0]"></div>
+      </ion-avatar>
+      <ion-item>
+        <ion-label position="floating">Имя</ion-label>
+        <ion-input [formControl]="form.controls.firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Фамилия</ion-label>
+        <ion-input [formControl]="form.controls.surname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input type="email" [formControl]="form.controls.email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Логин</ion-label>
+        <ion-input [formControl]="form.controls.username"></ion-input>
+      </ion-item>
+      <div class="error-content"><small>{{ error }}</small></div>
+      <ion-button expand="full" [disabled]="form.invalid" (click)="save()">Сохранить</ion-button>
+      <ion-button expand="full" color="danger" (click)="logout()">Выйти</ion-button>
+    </form>
+  </div>
+</ion-content>

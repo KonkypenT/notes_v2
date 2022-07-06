@@ -1,0 +1,27 @@
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+
+  .form {
+    ion-item + ion-item {
+      margin-top: 15px;
+    }
+
+    ion-button {
+      margin-top: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .error-content {
+      margin-top: 15px;
+      color: red;
+    }
+  }
+}
