@@ -24,11 +24,11 @@ import { GroupView } from './groups/views/group-view.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
+      host: 'containers-us-west-79.railway.app',
+      port: 7136,
       username: 'postgres',
-      password: 'admin',
-      database: 'postgres',
+      password: 'qssyUTgb2Thhb33NyJdN',
+      database: 'railway',
       entities: [
         User,
         Friends,

@@ -3,7 +3,7 @@ import { GroupService } from '../../shared/rest/group.rest';
 import { ModalController } from '@ionic/angular';
 import { CreateGroupComponent } from './info-about-group/create-group.component';
 import { MODAL_ID } from '../../shared/consts/modal-id.const';
-import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, finalize, first, switchMap, takeUntil } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { UserState } from '../../shared/store/user/user.state';
 import { GroupModel } from '../../shared/models/group.model';
@@ -28,7 +28,7 @@ export class GroupListPage implements OnInit, OnDestroy {
         filter((user) => !!user),
         takeUntil(this.unsubscribe$),
       )
-      .subscribe((user) => this.getGroups(user.id));
+      .subscribe(() => this.getGroups());
   }
 
   public ngOnDestroy(): void {
@@ -62,10 +62,14 @@ export class GroupListPage implements OnInit, OnDestroy {
       .subscribe((result) => (this.groups = result));
   }
 
-  private getGroups(userId: number): void {
+  public getGroups(event?: any): void {
+    const currentUser = this.store.selectSnapshot(UserState.getUser);
     this.groupService
-      .getGroups(userId)
-      .pipe(first())
+      .getGroups(currentUser.id)
+      .pipe(
+        first(),
+        finalize(() => event?.target?.complete()),
+      )
       .subscribe((result) => (this.groups = result));
   }
 }

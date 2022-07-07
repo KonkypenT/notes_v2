@@ -17,6 +17,7 @@ import { HomePageModule } from './home/home.module';
 import { UnauthorizedInterceptorProvider } from './shared/interceptors/unauthorized.interceptor';
 import { FriendsPageModule } from './home/friends/friends.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GroupListPageModule } from './home/group-list/group-list.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FriendsPageModule,
     FormsModule,
     ReactiveFormsModule,
+    GroupListPageModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

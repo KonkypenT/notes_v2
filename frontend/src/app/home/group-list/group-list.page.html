@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-icon name="add-circle-outline" size="large" (click)="createGroup()"></ion-icon>
     </ion-buttons>
@@ -7,4 +10,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="150" (ionRefresh)="getGroups($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="groups?.length" #listGroup>
+    <ion-item-sliding *ngFor="let group of groups">
+      <ion-item class="item">
+        <ion-label slot="start">{{group.title}}</ion-label>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-option color="danger">Выйти из группы</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
