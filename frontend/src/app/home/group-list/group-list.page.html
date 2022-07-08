@@ -17,13 +17,13 @@
 
   <ion-list *ngIf="groups?.length" #listGroup>
     <ion-item-sliding *ngFor="let group of groups">
-      <ion-item class="item">
-        <ion-label slot="start">{{group.title}}</ion-label>
+      <ion-item class="item" (click)="goToGroup(group)">
+        <ion-avatar *ngIf="group" slot="start">
+          <img *ngIf="group.photo" [src]="group.photo" />
+          <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>
+        </ion-avatar>
+        <ion-label>{{group.title}}</ion-label>
       </ion-item>
-
-      <ion-item-options side="start">
-        <ion-item-option color="danger">Выйти из группы</ion-item-option>
-      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 </ion-content>

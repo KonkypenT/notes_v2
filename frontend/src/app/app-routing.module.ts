@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ROUTING_NAME } from './shared/consts/routing.const';
 import { HomePage } from './home/home.page';
 import { FriendsPage } from './home/friends/friends.page';
+import { GroupListPage } from './home/group-list/group-list.page';
 
 const routes: Routes = [
   {
@@ -24,8 +25,12 @@ const routes: Routes = [
     children: [
       {
         path: ROUTING_NAME.groupList,
+        loadChildren: () => import('./home/group-list/group-list.module').then((m) => m.GroupListPageModule),
+      },
+      {
+        path: `${ROUTING_NAME.currentGroup}/:id`,
         loadChildren: () =>
-          import('./home/group-list/group-list-routing.module').then((m) => m.GroupListPageRoutingModule),
+          import('./home/group-list/current-group/current-group.module').then((m) => m.CurrentGroupPageModule),
       },
       {
         path: ROUTING_NAME.profile,
@@ -63,6 +68,11 @@ const routes: Routes = [
             pathMatch: 'full',
           },
         ],
+      },
+      {
+        path: '',
+        redirectTo: `/${ROUTING_NAME.home}/${ROUTING_NAME.groupList}`,
+        pathMatch: 'full',
       },
     ],
   },

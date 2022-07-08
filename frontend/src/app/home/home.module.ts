@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-import { CreateGroupComponent } from './group-list/info-about-group/create-group.component';
+import { CreateGroupComponent } from './group-list/create-group/create-group.component';
 
 const components = [CreateGroupComponent];
 

@@ -8,4 +8,5 @@ export const ROUTING_NAME = {
   myFriends: 'my-friends',
   myApplications: 'my-applications',
   applicationsToMe: 'applications-to-me',
+  currentGroup: 'current-group',
 };

@@ -1,37 +1,37 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GroupService } from '../../shared/rest/group.rest';
-import { ModalController } from '@ionic/angular';
-import { CreateGroupComponent } from './info-about-group/create-group.component';
+import { ModalController, NavController } from '@ionic/angular';
+import { CreateGroupComponent } from './create-group/create-group.component';
 import { MODAL_ID } from '../../shared/consts/modal-id.const';
 import { filter, finalize, first, switchMap, takeUntil } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { UserState } from '../../shared/store/user/user.state';
 import { GroupModel } from '../../shared/models/group.model';
 import { Subject } from 'rxjs';
+import { ROUTING_NAME } from '../../shared/consts/routing.const';
 
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.page.html',
   styleUrls: ['./group-list.page.scss'],
 })
-export class GroupListPage implements OnInit, OnDestroy {
+export class GroupListPage {
   public groups: GroupModel[] = [];
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private groupService: GroupService, private modalCtrl: ModalController, private store: Store) {}
+  constructor(
+    private groupService: GroupService,
+    private modalCtrl: ModalController,
+    private store: Store,
+    private navCtrl: NavController,
+  ) {}
 
-  public ngOnInit(): void {
-    this.store
-      .select(UserState.getUser)
-      .pipe(
-        filter((user) => !!user),
-        takeUntil(this.unsubscribe$),
-      )
-      .subscribe(() => this.getGroups());
+  public ionViewDidEnter(): void {
+    this.subscribeOnCurrentUser();
   }
 
-  public ngOnDestroy(): void {
+  public ionViewDidLeave(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -71,5 +71,23 @@ export class GroupListPage implements OnInit, OnDestroy {
         finalize(() => event?.target?.complete()),
       )
       .subscribe((result) => (this.groups = result));
+  }
+
+  public goToGroup(group: GroupModel): void {
+    this.navCtrl
+      .navigateForward([ROUTING_NAME.home, ROUTING_NAME.currentGroup, group.id], {
+        queryParams: { groupTitle: group.title },
+      })
+      .then();
+  }
+
+  private subscribeOnCurrentUser(): void {
+    this.store
+      .select(UserState.getUser)
+      .pipe(
+        filter((user) => !!user),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe(() => this.getGroups());
   }
 }

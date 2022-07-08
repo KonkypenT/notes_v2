@@ -34,7 +34,6 @@ import { GroupListPageModule } from './home/group-list/group-list.module';
     FriendsPageModule,
     FormsModule,
     ReactiveFormsModule,
-    GroupListPageModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
