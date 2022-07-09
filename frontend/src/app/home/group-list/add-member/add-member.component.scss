@@ -1,0 +1,29 @@
+ion-title {
+  width: max-content;
+}
+
+.content ion-item {
+  margin-top: 15px;
+}
+
+ion-avatar {
+  width: 48px;
+  height: 48px;
+  margin: auto 15px auto auto;
+
+  .fake-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #18a2e1;
+
+    &::before {
+      content: attr(data-name);
+      color: white;
+      font-size: 18px;
+    }
+  }
+}

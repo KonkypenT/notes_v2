@@ -19,6 +19,7 @@ import { GroupController } from './groups/group.controller';
 import { Members } from './members/entity/members.entity';
 import { MembersModule } from './members/members.module';
 import { GroupView } from './groups/views/group-view.entity';
+import { FullInfoAboutGroupView } from './groups/views/full-info-about-group.entity';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { GroupView } from './groups/views/group-view.entity';
         Group,
         Members,
         GroupView,
+        FullInfoAboutGroupView,
       ],
       synchronize: true,
       autoLoadEntities: true,

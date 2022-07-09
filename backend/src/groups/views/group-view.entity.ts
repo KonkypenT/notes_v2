@@ -3,7 +3,7 @@ import { ViewColumn, ViewEntity } from 'typeorm';
 @ViewEntity({
   expression: `
         select
-        "group"."id", "group"."title", "group"."ownerId", "group"."photo", "members"."userId"
+        "group"."id", "group"."title", "group"."ownerId", "group"."photo", "group"."description", "members"."userId"
         from
         "group" "group"
         left join
@@ -27,4 +27,7 @@ export class GroupView {
 
   @ViewColumn()
   photo: string;
+
+  @ViewColumn()
+  description: string;
 }

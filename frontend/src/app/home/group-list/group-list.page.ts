@@ -9,6 +9,7 @@ import { UserState } from '../../shared/store/user/user.state';
 import { GroupModel } from '../../shared/models/group.model';
 import { Subject } from 'rxjs';
 import { ROUTING_NAME } from '../../shared/consts/routing.const';
+import { SetGroups } from '../../shared/store/groups/groups.action';
 
 @Component({
   selector: 'app-group-list',
@@ -70,7 +71,10 @@ export class GroupListPage {
         first(),
         finalize(() => event?.target?.complete()),
       )
-      .subscribe((result) => (this.groups = result));
+      .subscribe((result) => {
+        this.groups = result;
+        this.store.dispatch(new SetGroups(result));
+      });
   }
 
   public goToGroup(group: GroupModel): void {

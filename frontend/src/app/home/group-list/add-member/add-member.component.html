@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Добавить участников</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="content">
+    <ion-item *ngFor="let friend of friends" color="none">
+      <ion-avatar class="member-avatar" *ngIf="friend" slot="start">
+        <img *ngIf="friend.photo" [src]="friend.photo" />
+        <div *ngIf="!friend.photo" class="fake-photo" [attr.data-name]="friend.firstName[0] + friend.surname[0]"></div>
+      </ion-avatar>
+      <ion-label>
+        <p>{{ friend.firstName }} {{ friend.surname }}</p>
+        <p>{{ friend.username }}</p>
+      </ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="friend.isChecked"></ion-checkbox>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" [disabled]="" (click)="add()">Добавить</ion-button>
+</ion-footer>

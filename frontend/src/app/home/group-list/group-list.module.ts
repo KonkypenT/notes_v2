@@ -9,8 +9,10 @@ import { GroupListPageRoutingModule } from './group-list-routing.module';
 import { GroupListPage } from './group-list.page';
 import { SharedModule } from '../../shared/shared.module';
 import { InfoAboutGroupComponent } from './info-about-group/info-about-group.component';
+import { AddMemberComponent } from './add-member/add-member.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
-const components = [InfoAboutGroupComponent];
+const components = [InfoAboutGroupComponent, AddMemberComponent, CreateGroupComponent];
 
 @NgModule({
   imports: [CommonModule, IonicModule, GroupListPageRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],

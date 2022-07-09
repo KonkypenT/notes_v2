@@ -9,6 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { ROUTING_NAME } from '../../shared/consts/routing.const';
 import { UserModel } from '../../shared/models/user.model';
+import { resetStore } from '../../shared/functions/reset-store.function';
 
 @Component({
   selector: 'app-profile',
@@ -58,6 +59,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   public logout(): void {
     this.navCtrl.navigateRoot(ROUTING_NAME.auth).then();
+    resetStore(this.store);
   }
 
   private subscribeOnCurrentUser(): void {

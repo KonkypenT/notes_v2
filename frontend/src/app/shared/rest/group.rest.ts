@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { GroupModel } from '../models/group.model';
 import { Observable } from 'rxjs';
 import { Urls } from '../consts/urls';
+import { FullInfoGroupModel } from '../models/full-info-group.model';
 
 @Injectable({ providedIn: 'root' })
 export class GroupService {
@@ -18,5 +19,11 @@ export class GroupService {
     const url = Urls.group.getGroups(userId);
 
     return this.httpClient.get<GroupModel[]>(url);
+  }
+
+  public getCurrentGroup(groupId: number): Observable<FullInfoGroupModel> {
+    const url = Urls.group.getCurrentGroup(groupId);
+
+    return this.httpClient.get<FullInfoGroupModel>(url);
   }
 }

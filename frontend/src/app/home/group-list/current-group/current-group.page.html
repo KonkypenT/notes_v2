@@ -4,11 +4,15 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-icon name="information-circle-outline" size="large"></ion-icon>
+      <ion-icon name="information-circle-outline" size="large" (click)="infoAboutGroup()"></ion-icon>
       <ion-icon name="add-circle-outline" size="large" (click)="createEvent()"></ion-icon>
     </ion-buttons>
     <ion-title>{{titleGroup}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="150" (ionRefresh)="getCurrentGroup($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>

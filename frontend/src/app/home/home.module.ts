@@ -7,12 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-import { CreateGroupComponent } from './group-list/create-group/create-group.component';
-
-const components = [CreateGroupComponent];
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule, ReactiveFormsModule],
-  declarations: [HomePage, ...components],
+  declarations: [HomePage],
 })
 export class HomePageModule {}

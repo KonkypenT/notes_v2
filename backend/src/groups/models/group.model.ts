@@ -6,4 +6,5 @@ export interface GroupModel {
   ownerId: number;
   photo?: string;
   inactiveDate?: Date;
+  description?: string;
 }

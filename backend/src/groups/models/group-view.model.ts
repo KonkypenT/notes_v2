@@ -4,4 +4,5 @@ export interface GroupViewModel {
   userId: number;
   title: string;
   photo?: string;
+  description?: string;
 }

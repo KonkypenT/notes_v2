@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Request } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Request } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { GroupViewModel } from './models/group-view.model';
 
@@ -14,5 +14,10 @@ export class GroupController {
   @Get('get-groups/:id')
   public async getGroups(@Param() params): Promise<GroupViewModel[]> {
     return await this.groupService.getGroups(params.id);
+  }
+
+  @Get('get-current-group')
+  public async getCurrentGroup(@Query('groupId') groupId: number): Promise<any> {
+    return await this.groupService.getCurrentGroup({ groupId });
   }
 }

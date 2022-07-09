@@ -25,4 +25,7 @@ export class Group {
 
   @Column({ nullable: true })
   public inactiveDate?: Date;
+
+  @Column({ nullable: true })
+  public description?: string;
 }

@@ -26,6 +26,7 @@ export class Urls {
 
   public static group = {
     getGroups: (userId: number): string => `${environment.baseUrl}/group/get-groups/${userId}`,
+    getCurrentGroup: (groupId: number): string => `${environment.baseUrl}/group/get-current-group?groupId=${groupId}`,
     addGroup: `${environment.baseUrl}/group/add-group`,
   };
 }
