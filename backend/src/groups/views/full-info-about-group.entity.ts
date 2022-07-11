@@ -18,35 +18,35 @@ import { ViewColumn, ViewEntity } from 'typeorm';
 })
 export class FullInfoAboutGroupView {
   @ViewColumn()
-  id: number;
+  public id: number;
 
   @ViewColumn()
-  title: string;
+  public title: string;
 
   @ViewColumn()
-  ownerId: number;
+  public ownerId: number;
 
   @ViewColumn()
-  photo: string;
+  public photo: string;
 
   @ViewColumn()
-  description: string;
+  public description: string;
 
   @ViewColumn()
-  userId: number;
+  public userId: number;
 
   @ViewColumn()
-  firstName: string;
+  public firstName: string;
 
   @ViewColumn()
-  surname: string;
+  public surname: string;
 
   @ViewColumn()
-  username: string;
+  public username: string;
 
   @ViewColumn()
-  email: string;
+  public email: string;
 
   @ViewColumn()
-  userPhoto: string;
+  public userPhoto: string;
 }

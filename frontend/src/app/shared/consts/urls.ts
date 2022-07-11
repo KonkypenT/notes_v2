@@ -28,5 +28,10 @@ export class Urls {
     getGroups: (userId: number): string => `${environment.baseUrl}/group/get-groups/${userId}`,
     getCurrentGroup: (groupId: number): string => `${environment.baseUrl}/group/get-current-group?groupId=${groupId}`,
     addGroup: `${environment.baseUrl}/group/add-group`,
+    updateInfo: `${environment.baseUrl}/group/update-info`,
+  };
+
+  public static members = {
+    addMembers: `${environment.baseUrl}/members/add-members`,
   };
 }

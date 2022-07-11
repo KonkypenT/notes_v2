@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="container">
-    <form class="form" [formGroup]="form">
+    <form *ngIf="currentGroup$ | async as group" class="form" [formGroup]="form">
       <ion-avatar class="group-avatar" *ngIf="group">
         <img *ngIf="group.photo" [src]="group.photo" />
         <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>

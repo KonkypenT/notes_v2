@@ -36,8 +36,9 @@ export class CurrentGroupPage {
   ) {}
 
   public ionViewDidEnter(): void {
+    this.titleGroup = this.route.snapshot.queryParams.groupTitle;
     this.subscribeOnCurrentUser();
-    this.subscribeOnDataRouting();
+    this.subscribeOnCurrentGroup();
   }
 
   public ionViewDidLeave(): void {
@@ -49,14 +50,12 @@ export class CurrentGroupPage {
   public createEvent(): void {}
 
   public async infoAboutGroup(): Promise<void> {
-    const currentGroup = this.store.selectSnapshot(CurrentGroupState.getCurrentGroup);
     const modal = await this.modalCtrl.create({
       component: InfoAboutGroupComponent,
       presentingElement: this.documentRef.querySelector('.current-group'),
       canDismiss: true,
       id: MODAL_ID.infoAboutGroup,
       componentProps: {
-        group: currentGroup,
         friends: this.friends,
       },
     });
@@ -77,10 +76,16 @@ export class CurrentGroupPage {
       });
   }
 
-  private subscribeOnDataRouting(): void {
-    this.route.queryParams.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
-      this.titleGroup = params.groupTitle;
-    });
+  private subscribeOnCurrentGroup(): void {
+    this.store
+      .select(CurrentGroupState.getCurrentGroup)
+      .pipe(
+        filter((group) => !!group),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((group) => {
+        this.titleGroup = group.title;
+      });
   }
 
   private subscribeOnCurrentUser(): void {

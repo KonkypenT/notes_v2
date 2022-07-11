@@ -49,4 +49,16 @@ export class GroupService {
       members,
     };
   }
+
+  public async updateInfo({ title, description, groupId }): Promise<void> {
+    await this.groupRepository
+      .createQueryBuilder()
+      .update()
+      .set({
+        title,
+        description,
+      })
+      .where('id = :id', { id: groupId })
+      .execute();
+  }
 }

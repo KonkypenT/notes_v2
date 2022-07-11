@@ -19,8 +19,11 @@
       </ion-label>
       <ion-checkbox slot="end" [(ngModel)]="friend.isChecked"></ion-checkbox>
     </ion-item>
+    <ion-text *ngIf="!friends.length" class="no-friends" color="dark">
+      <h5>У вас нет друзей или все ваши друзья добавлены в данную группу</h5>
+    </ion-text>
   </div>
 </ion-content>
 <ion-footer>
-  <ion-button expand="full" [disabled]="" (click)="add()">Добавить</ion-button>
+  <ion-button expand="full" (click)="add()">Добавить</ion-button>
 </ion-footer>

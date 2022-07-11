@@ -18,4 +18,20 @@ export class MembersService {
       })
       .execute();
   }
+
+  public async addMembers({ friends, groupId }): Promise<void> {
+    console.log(friends);
+    for (const f of friends) {
+      console.log(f);
+      await this.membersRepository
+        .createQueryBuilder()
+        .insert()
+        .values({
+          isActive: true,
+          userId: f.friendId,
+          groupId,
+        })
+        .execute();
+    }
+  }
 }

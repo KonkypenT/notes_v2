@@ -4,6 +4,7 @@ import { GroupModel } from '../models/group.model';
 import { Observable } from 'rxjs';
 import { Urls } from '../consts/urls';
 import { FullInfoGroupModel } from '../models/full-info-group.model';
+import { FriendModel } from '../models/friend.model';
 
 @Injectable({ providedIn: 'root' })
 export class GroupService {
@@ -25,5 +26,26 @@ export class GroupService {
     const url = Urls.group.getCurrentGroup(groupId);
 
     return this.httpClient.get<FullInfoGroupModel>(url);
+  }
+
+  public addMemberInGroup(friends: FriendModel[], groupId: number): Observable<void> {
+    const url = Urls.members.addMembers;
+    const data = {
+      friends,
+      groupId,
+    };
+
+    return this.httpClient.post<void>(url, data);
+  }
+
+  public updateInfoAboutGroup(title: string, description: string, groupId): Observable<void> {
+    const url = Urls.group.updateInfo;
+    const data = {
+      title,
+      description,
+      groupId,
+    };
+
+    return this.httpClient.post<void>(url, data);
   }
 }

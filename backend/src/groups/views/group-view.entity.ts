@@ -14,20 +14,20 @@ import { ViewColumn, ViewEntity } from 'typeorm';
 })
 export class GroupView {
   @ViewColumn()
-  id: number;
+  public id: number;
 
   @ViewColumn()
-  userId: number;
+  public userId: number;
 
   @ViewColumn()
-  ownerId: number;
+  public ownerId: number;
 
   @ViewColumn()
-  title: string;
+  public title: string;
 
   @ViewColumn()
-  photo: string;
+  public photo: string;
 
   @ViewColumn()
-  description: string;
+  public description: string;
 }

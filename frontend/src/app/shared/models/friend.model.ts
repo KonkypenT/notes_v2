@@ -7,6 +7,6 @@ export interface FriendModel {
   username: string;
   email: string;
   linkId: number;
-  photo: number;
+  photo: string;
   isChecked?: boolean;
 }

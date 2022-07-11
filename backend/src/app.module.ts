@@ -20,6 +20,7 @@ import { Members } from './members/entity/members.entity';
 import { MembersModule } from './members/members.module';
 import { GroupView } from './groups/views/group-view.entity';
 import { FullInfoAboutGroupView } from './groups/views/full-info-about-group.entity';
+import { MembersController } from './members/members.controller';
 
 @Module({
   imports: [
@@ -52,6 +53,6 @@ import { FullInfoAboutGroupView } from './groups/views/full-info-about-group.ent
     GroupModule,
     MembersModule,
   ],
-  controllers: [AppController, UserController, FriendsController, GroupController],
+  controllers: [AppController, UserController, FriendsController, GroupController, MembersController],
 })
 export class AppModule {}

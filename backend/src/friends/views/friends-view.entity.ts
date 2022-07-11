@@ -10,29 +10,29 @@ import { ViewColumn, ViewEntity } from 'typeorm';
 })
 export class FriendsView {
   @ViewColumn()
-  id: number;
+  public id: number;
 
   @ViewColumn()
-  userId: number;
+  public userId: number;
 
   @ViewColumn()
-  friendId: number;
+  public friendId: number;
 
   @ViewColumn()
-  firstName: string;
+  public firstName: string;
 
   @ViewColumn()
-  surname: string;
+  public surname: string;
 
   @ViewColumn()
-  username: string;
+  public username: string;
 
   @ViewColumn()
-  email: string;
+  public email: string;
 
   @ViewColumn()
-  linkId: number;
+  public linkId: number;
 
   @ViewColumn()
-  photo: string;
+  public photo: string;
 }
