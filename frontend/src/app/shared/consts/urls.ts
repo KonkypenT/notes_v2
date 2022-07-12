@@ -34,4 +34,9 @@ export class Urls {
   public static members = {
     addMembers: `${environment.baseUrl}/members/add-members`,
   };
+
+  public static events = {
+    getEvents: (groupId: number): string => `${environment.baseUrl}/events/get-events/${groupId}`,
+    addEvent: `${environment.baseUrl}/events/add-event`,
+  };
 }

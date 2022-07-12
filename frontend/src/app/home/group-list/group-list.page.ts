@@ -17,7 +17,7 @@ import { SetGroups } from '../../shared/store/groups/groups.action';
   styleUrls: ['./group-list.page.scss'],
 })
 export class GroupListPage {
-  public groups: GroupModel[] = [];
+  public groups: GroupModel[] | null = null;
 
   private unsubscribe$ = new Subject<void>();
 

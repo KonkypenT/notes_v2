@@ -9,6 +9,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-spinner name="crescent" *ngIf="!friends"></ion-spinner>
+
   <ion-list *ngIf="friends?.length" #listFriend>
     <ion-item-sliding *ngFor="let user of friends">
       <ion-item class="item">

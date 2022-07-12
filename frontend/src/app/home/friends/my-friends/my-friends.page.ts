@@ -11,7 +11,7 @@ import { FriendModel } from '../../../shared/models/friend.model';
   styleUrls: ['./my-friends.page.scss'],
 })
 export class MyFriendsPage {
-  public friends: FriendModel[] = [];
+  public friends: FriendModel[] | null = null;
 
   constructor(private store: Store, private friendsService: FriendsService) {}
 

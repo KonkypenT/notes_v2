@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Создание группы</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="form" [formGroup]="form">
+    <ion-item>
+      <ion-label position="stacked">Название события</ion-label>
+      <ion-input [formControl]="form.controls.title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Дата события</ion-label>
+      <ion-input type="date" [formControl]="form.controls.eventDate"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Дата окончания события</ion-label>
+      <ion-input type="date" [formControl]="form.controls.endDate"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Место события</ion-label>
+      <ion-input [formControl]="form.controls.placeEvent"></ion-input>
+    </ion-item>
+    <ion-button expand="full" [disabled]="form.invalid" (click)="createEvent()">Создать событие</ion-button>
+  </form>
+</ion-content>

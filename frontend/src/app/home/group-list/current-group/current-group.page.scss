@@ -1,0 +1,27 @@
+@import 'spinner';
+
+.item {
+  margin-top: 15px;
+}
+
+ion-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 15px;
+
+  .fake-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #27b55f;
+
+    &::before {
+      content: attr(data-name);
+      color: white;
+      font-size: 18px;
+    }
+  }
+}

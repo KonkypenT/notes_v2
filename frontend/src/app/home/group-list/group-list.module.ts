@@ -11,8 +11,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { InfoAboutGroupComponent } from './info-about-group/info-about-group.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { AddEventComponent } from './add-event/add-event.component';
 
-const components = [InfoAboutGroupComponent, AddMemberComponent, CreateGroupComponent];
+const components = [InfoAboutGroupComponent, AddMemberComponent, CreateGroupComponent, AddEventComponent];
 
 @NgModule({
   imports: [CommonModule, IonicModule, GroupListPageRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],

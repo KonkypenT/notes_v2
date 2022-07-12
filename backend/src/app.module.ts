@@ -21,6 +21,9 @@ import { MembersModule } from './members/members.module';
 import { GroupView } from './groups/views/group-view.entity';
 import { FullInfoAboutGroupView } from './groups/views/full-info-about-group.entity';
 import { MembersController } from './members/members.controller';
+import { Event } from './events/entity/event.entity';
+import { EventController } from './events/event.controller';
+import { EventModule } from './events/event.module';
 
 @Module({
   imports: [
@@ -42,6 +45,7 @@ import { MembersController } from './members/members.controller';
         Members,
         GroupView,
         FullInfoAboutGroupView,
+        Event,
       ],
       synchronize: true,
       autoLoadEntities: true,
@@ -52,7 +56,8 @@ import { MembersController } from './members/members.controller';
     FriendsModule,
     GroupModule,
     MembersModule,
+    EventModule,
   ],
-  controllers: [AppController, UserController, FriendsController, GroupController, MembersController],
+  controllers: [AppController, UserController, FriendsController, GroupController, MembersController, EventController],
 })
 export class AppModule {}

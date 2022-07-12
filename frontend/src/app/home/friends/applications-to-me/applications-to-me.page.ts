@@ -15,7 +15,7 @@ import { SetCount } from '../../../shared/store/count-application-friend/count-a
   styleUrls: ['./applications-to-me.page.scss'],
 })
 export class ApplicationsToMePage {
-  public applications: ApplicationModel[] = [];
+  public applications: ApplicationModel[] | null = null;
 
   @ViewChild('listFriend') public listFriend: IonList;
 

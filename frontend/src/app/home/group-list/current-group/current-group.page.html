@@ -15,4 +15,22 @@
   <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="150" (ionRefresh)="getCurrentGroup($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <ion-spinner name="crescent" *ngIf="!events"></ion-spinner>
+
+  <ion-list *ngIf="events?.length" #listEvent>
+    <ion-item-sliding *ngFor="let event of events">
+      <ion-item class="item" (click)="goToGroup(event)">
+        <ion-avatar *ngIf="event" slot="start">
+          <img *ngIf="event.photo" [src]="event.photo" />
+          <div *ngIf="!event.photo" class="fake-photo" [attr.data-name]="event.title[0]"></div>
+        </ion-avatar>
+        <ion-label>
+          <p><strong>{{event.title}}</strong></p>
+          <p>Дата - {{event.eventDate | date: 'dd.MM.yy'}}</p>
+          <p>Место - {{event.placeEvent}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
