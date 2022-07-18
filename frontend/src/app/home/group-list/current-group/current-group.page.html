@@ -20,7 +20,7 @@
 
   <ion-list *ngIf="events?.length" #listEvent>
     <ion-item-sliding *ngFor="let event of events">
-      <ion-item class="item" (click)="goToGroup(event)">
+      <ion-item class="item" (click)="goToEvent(event)">
         <ion-avatar *ngIf="event" slot="start">
           <img *ngIf="event.photo" [src]="event.photo" />
           <div *ngIf="!event.photo" class="fake-photo" [attr.data-name]="event.title[0]"></div>

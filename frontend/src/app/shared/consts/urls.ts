@@ -39,4 +39,9 @@ export class Urls {
     getEvents: (groupId: number): string => `${environment.baseUrl}/events/get-events/${groupId}`,
     addEvent: `${environment.baseUrl}/events/add-event`,
   };
+
+  public static map = {
+    getPlaceByCoords: (lat: number, lon: number): string =>
+      `https://catalog.api.2gis.com/3.0/items/geocode?lat=${lat}&lon=${lon}&fields=items.point&key=${environment.dictionaryKey}`,
+  };
 }

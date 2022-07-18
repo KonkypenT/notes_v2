@@ -17,7 +17,7 @@ import { HomePageModule } from './home/home.module';
 import { UnauthorizedInterceptorProvider } from './shared/interceptors/unauthorized.interceptor';
 import { FriendsPageModule } from './home/friends/friends.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GroupListPageModule } from './home/group-list/group-list.module';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +40,7 @@ import { GroupListPageModule } from './home/group-list/group-list.module';
     SessionCookieInterceptorProvider,
     UnauthorizedInterceptorProvider,
     CheckProfileGuard,
+    Geolocation,
   ],
   bootstrap: [AppComponent],
 })

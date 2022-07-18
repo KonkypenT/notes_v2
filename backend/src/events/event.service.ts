@@ -19,8 +19,10 @@ export class EventService {
         endDate: body.endDate,
         placeEvent: body.placeEvent,
         eventDate: body.eventDate,
-        photo: null,
+        photo: body.photo || null,
         isActive: true,
+        latitude: body.latitude?.toString() || null,
+        longitude: body.longitude?.toString() || null,
       })
       .execute();
   }

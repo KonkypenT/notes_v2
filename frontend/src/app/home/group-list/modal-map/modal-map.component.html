@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Выбор места</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id="container"></div>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" [disabled]="!marker" (click)="applyPlace()">Применить</ion-button>
+</ion-footer>

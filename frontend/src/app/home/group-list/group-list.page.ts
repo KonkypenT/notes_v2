@@ -28,7 +28,7 @@ export class GroupListPage {
     private navCtrl: NavController,
   ) {}
 
-  public ionViewDidEnter(): void {
+  public async ionViewDidEnter(): Promise<void> {
     this.subscribeOnCurrentUser();
   }
 

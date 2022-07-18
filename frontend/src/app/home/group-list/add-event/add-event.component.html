@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Создание группы</ion-title>
+    <ion-title>Создание события</ion-title>
     <ion-buttons slot="end">
       <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
     </ion-buttons>
@@ -23,7 +23,27 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Место события</ion-label>
-      <ion-input [formControl]="form.controls.placeEvent"></ion-input>
+      <ion-input
+        [formControl]="form.controls.placeEvent"
+        [value]="(selectedPlace | async)?.result?.items[0]?.full_name"
+      ></ion-input>
+      <ion-button slot="end" (click)="showMap()">
+        <ion-icon name="map-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item [hidden]="true">
+      <ion-label position="stacked">Долгота</ion-label>
+      <ion-input
+        [formControl]="form.controls.longitude"
+        [value]="(selectedPlace | async)?.result?.items[0]?.point?.lon"
+      ></ion-input>
+    </ion-item>
+    <ion-item [hidden]="true">
+      <ion-label position="stacked">Широта</ion-label>
+      <ion-input
+        [formControl]="form.controls.latitude"
+        [value]="(selectedPlace | async)?.result?.items[0]?.point?.lat"
+      ></ion-input>
     </ion-item>
     <ion-button expand="full" [disabled]="form.invalid" (click)="createEvent()">Создать событие</ion-button>
   </form>

@@ -3,4 +3,6 @@ export const MODAL_ID = {
   infoAboutGroup: 'infoAboutGroup',
   addMember: 'addMember',
   addEvent: 'addEvent',
+  infoAboutEvent: 'infoAboutEvent',
+  modalMap: 'modalMap',
 };

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Информация</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <form class="form" [formGroup]="form">
+      <ion-avatar class="group-avatar" *ngIf="event">
+        <img *ngIf="event.photo" [src]="event.photo" />
+        <div *ngIf="!event.photo" class="fake-photo" [attr.data-name]="event.title[0]"></div>
+      </ion-avatar>
+      <ion-item>
+        <ion-label position="floating">Название события</ion-label>
+        <ion-input [formControl]="form.controls.title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Место события</ion-label>
+        <ion-input [formControl]="form.controls.placeEvent"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Дата события</ion-label>
+        <ion-input type="date" [hidden]="true" [formControl]="form.controls.eventDate"></ion-input>
+        <div class="date-info">{{ form.controls.eventDate.value | date: 'dd.MM.yyyy' }}</div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Дата окончания события</ion-label>
+        <ion-input type="date" [hidden]="true" [formControl]="form.controls.endDate"></ion-input>
+        <div class="date-info">{{ form.controls.eventDate.value | date: 'dd.MM.yyyy' }}</div>
+      </ion-item>
+    </form>
+  </div>
+</ion-content>

@@ -16,6 +16,7 @@ import { FriendModel } from '../../../shared/models/friend.model';
 import { AddEventComponent } from '../add-event/add-event.component';
 import { EventService } from '../../../shared/rest/event.rest';
 import { EventsModel } from '../../../shared/models/events.model';
+import { InfoAboutEventComponent } from '../info-about-event/info-about-event.component';
 
 @Component({
   selector: 'app-current-group.current-group',
@@ -58,9 +59,6 @@ export class CurrentGroupPage {
     const modal = await this.modalCtrl.create({
       component: AddEventComponent,
       id: MODAL_ID.addEvent,
-      canDismiss: true,
-      initialBreakpoint: 0.65,
-      breakpoints: [0, 0.5, 0.65, 0.75, 0.95],
     });
     await modal.present();
     const result = await modal.onDidDismiss();
@@ -103,6 +101,20 @@ export class CurrentGroupPage {
         this.friends = friends;
         this.events = events;
       });
+  }
+
+  public async goToEvent(event: EventsModel): Promise<void> {
+    const currentEvent = this.events.find((e) => e.id === event.id);
+    const modal = await this.modalCtrl.create({
+      component: InfoAboutEventComponent,
+      id: MODAL_ID.infoAboutEvent,
+      componentProps: {
+        event: currentEvent,
+      },
+      canDismiss: true,
+      presentingElement: this.documentRef.querySelector('.current-group'),
+    });
+    modal.present();
   }
 
   private subscribeOnCurrentGroup(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
 import { ModalController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +6,9 @@ import { EventService } from '../../../shared/rest/event.rest';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { CurrentGroupState } from '../../../shared/store/current-group/current-group.state';
+import { DOCUMENT } from '@angular/common';
+import { showMap } from '../../../shared/functions/toggle-map.function';
+import { MapStoreService } from '../../../shared/services/map-store.service';
 
 @Component({
   selector: 'app-add-event',
@@ -13,17 +16,28 @@ import { CurrentGroupState } from '../../../shared/store/current-group/current-g
   styleUrls: ['./add-event.component.scss'],
 })
 export class AddEventComponent {
+  public selectedPlace = this.mapStore.getPlace();
+
   public form = new FormGroup({
     title: new FormControl<string>('', Validators.required),
     eventDate: new FormControl<Date>(null, Validators.required),
     endDate: new FormControl<Date>(null, Validators.required),
     placeEvent: new FormControl<string>('', Validators.required),
+    longitude: new FormControl<number | null>(null),
+    latitude: new FormControl<number | null>(null),
   });
 
-  constructor(private modalCtrl: ModalController, private eventService: EventService, private store: Store) {}
+  constructor(
+    @Inject(DOCUMENT) private readonly documentRef: Document,
+    private modalCtrl: ModalController,
+    private eventService: EventService,
+    private store: Store,
+    private mapStore: MapStoreService,
+  ) {}
 
   public closeModal(): void {
     this.modalCtrl.dismiss(undefined, 'close', MODAL_ID.addEvent).then();
+    this.mapStore.setPlace(null);
   }
 
   public createEvent(): void {
@@ -33,12 +47,19 @@ export class AddEventComponent {
       eventDate: this.form.value.eventDate,
       placeEvent: this.form.value.placeEvent,
       endDate: this.form.value.endDate,
+      longitude: this.form.value.longitude,
+      latitude: this.form.value.latitude,
     };
     this.eventService
       .addEvent(data, currentGroup.id)
       .pipe(first())
       .subscribe(() => {
         this.modalCtrl.dismiss(undefined, 'create', MODAL_ID.addEvent).then();
+        this.mapStore.setPlace(null);
       });
+  }
+
+  public showMap(): void {
+    showMap();
   }
 }

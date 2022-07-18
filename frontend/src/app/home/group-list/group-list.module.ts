@@ -12,8 +12,17 @@ import { InfoAboutGroupComponent } from './info-about-group/info-about-group.com
 import { AddMemberComponent } from './add-member/add-member.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { AddEventComponent } from './add-event/add-event.component';
+import { InfoAboutEventComponent } from './info-about-event/info-about-event.component';
+import { ModalMapComponent } from './modal-map/modal-map.component';
 
-const components = [InfoAboutGroupComponent, AddMemberComponent, CreateGroupComponent, AddEventComponent];
+const components = [
+  InfoAboutGroupComponent,
+  AddMemberComponent,
+  CreateGroupComponent,
+  AddEventComponent,
+  InfoAboutEventComponent,
+  ModalMapComponent,
+];
 
 @NgModule({
   imports: [CommonModule, IonicModule, GroupListPageRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
