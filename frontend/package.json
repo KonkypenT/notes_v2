@@ -6,11 +6,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open --proxy-config proxy.conf.json --port 4202",
-    "start:host": "ng serve --open --proxy-config proxy-host.conf.json --port 4203",
+    "start:stage": "ng serve --open --proxy-config proxy-stage.conf.json --port 4203",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prebuild:tst": "cross-env NODE_ENV=stage node prebuild.js",
+    "afterbuild:android": "cross-env PLATFORM=android node afterbuild.js",
+    "build:stage:android:open": "npm run prebuild:tst && ionic capacitor build android -c=stage --device --release  && npm run afterbuild:android"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +36,8 @@
     "@ngxs/logger-plugin": "^3.7.4-dev.master-38cbcac",
     "@ngxs/store": "^3.7.4-dev.master-38cbcac",
     "cordova-plugin-geolocation": "^4.1.0",
+    "cross-env": "^7.0.3",
+    "git-repo-info": "^2.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"

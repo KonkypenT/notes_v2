@@ -12,7 +12,14 @@ class SessionCookieInterceptor implements HttpInterceptor {
       });
       return next.handle(modified);
     }
-    return next.handle(request);
+    const modified = request.clone({
+      headers: request.headers
+        .append('Access-Control-Allow-Origin', `*`)
+        .append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT')
+        .append('Content-Type', 'application/json')
+        .append('Accept', 'application/json'),
+    });
+    return next.handle(modified);
   }
 }
 

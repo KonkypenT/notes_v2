@@ -1,6 +1,9 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "ru.events",
 	"appName": "notes",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"server": {
+		"hostname": "89.223.126.211:3000"
+	}
 }
