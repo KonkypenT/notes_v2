@@ -1,3 +1,5 @@
+const host = '89.223.126.211';
+
 export const environment = {
   production: false,
   baseUrl: 'notes',

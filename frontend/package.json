@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open --proxy-config proxy.conf.json --port 4202",
+    "start:host": "ng serve --open --proxy-config proxy-host.conf.json --port 4203",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
