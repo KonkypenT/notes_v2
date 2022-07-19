@@ -13,7 +13,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "start:prod:watch": "pm2 start node dist/main --name 'web-app' --watch",
+    "start:prod:watch": "pm2 node dist/main --name 'web-app' --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
