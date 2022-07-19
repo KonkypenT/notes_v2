@@ -29,11 +29,11 @@ import { EventModule } from './events/event.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: '85.193.89.177',
       port: 5432,
-      username: 'postgres',
-      password: 'admin',
-      database: 'postgres',
+      username: 'gen_user',
+      password: '2233Diman2233',
+      database: 'default_db',
       entities: [
         User,
         Friends,
