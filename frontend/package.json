@@ -13,7 +13,9 @@
     "e2e": "ng e2e",
     "prebuild:tst": "cross-env NODE_ENV=stage node prebuild.js",
     "afterbuild:android": "cross-env PLATFORM=android node afterbuild.js",
-    "build:stage:android:open": "npm run prebuild:tst && ionic capacitor build android -c=stage --device --release  && npm run afterbuild:android"
+    "afterbuild:ios": "cross-env PLATFORM=ios node afterbuild.js",
+    "build:stage:android:open": "npm run prebuild:tst && ionic capacitor build android -c=stage --device --release  && npm run afterbuild:android",
+    "build:stage:ios:open": "npm run prebuild:tst && ionic capacitor build ios -c=stage --device --release && npm run afterbuild:ios"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +31,7 @@
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.6.0",
     "@capacitor/haptics": "1.1.4",
+    "@capacitor/ios": "3.6.0",
     "@capacitor/keyboard": "1.2.3",
     "@capacitor/status-bar": "1.0.8",
     "@ionic/angular": "^6.1.9",
