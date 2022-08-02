@@ -30,7 +30,7 @@
       <ion-item>
         <ion-label position="floating">Дата окончания события</ion-label>
         <ion-input type="date" [hidden]="true" [formControl]="form.controls.endDate"></ion-input>
-        <div class="date-info">{{ form.controls.eventDate.value | date: 'dd.MM.yyyy' }}</div>
+        <div class="date-info">{{ form.controls.endDate.value | date: 'dd.MM.yyyy' }}</div>
       </ion-item>
     </form>
   </div>

@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+  <key>NSLocationAlwaysUsageDescription</key>
+   <string>NSLocationAlwaysUsageDescription</string>
+   <key>NSLocationWhenInUseUsageDescription</key>
+   <string>NSLocationWhenInUseUsageDescription</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
@@ -50,14 +54,5 @@
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <true/>
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>need location access to find things nearby</string>
-    </edit-config>
-    <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>need location access to find things nearby</string>
-    </edit-config>
-    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-        <string>need location access to find things nearby</string>
-    </edit-config>
   </dict>
 </plist>
