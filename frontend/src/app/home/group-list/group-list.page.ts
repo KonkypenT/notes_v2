@@ -10,6 +10,7 @@ import { GroupModel } from '../../shared/models/group.model';
 import { Subject } from 'rxjs';
 import { ROUTING_NAME } from '../../shared/consts/routing.const';
 import { SetGroups } from '../../shared/store/groups/groups.action';
+import { ResetCurrentGroup } from '../../shared/store/current-group/current-group.action';
 
 @Component({
   selector: 'app-group-list',
@@ -30,6 +31,7 @@ export class GroupListPage {
 
   public async ionViewDidEnter(): Promise<void> {
     this.subscribeOnCurrentUser();
+    this.store.dispatch(ResetCurrentGroup);
   }
 
   public ionViewDidLeave(): void {

@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ROUTING_NAME } from './shared/consts/routing.const';
 import { HomePage } from './home/home.page';
 import { FriendsPage } from './home/friends/friends.page';
-import { GroupListPage } from './home/group-list/group-list.page';
+import { AddEventComponent } from './home/group-list/add-event/add-event.component';
 
 const routes: Routes = [
   {
@@ -27,6 +27,7 @@ const routes: Routes = [
         path: ROUTING_NAME.groupList,
         loadChildren: () => import('./home/group-list/group-list.module').then((m) => m.GroupListPageModule),
       },
+      { path: `${ROUTING_NAME.addEvent}`, component: AddEventComponent },
       {
         path: `${ROUTING_NAME.currentGroup}/:id`,
         loadChildren: () =>

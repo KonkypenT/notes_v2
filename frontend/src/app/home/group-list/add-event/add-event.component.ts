@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MODAL_ID } from '../../../shared/consts/modal-id.const';
-import { ModalController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventService } from '../../../shared/rest/event.rest';
 import { first } from 'rxjs/operators';
@@ -29,14 +28,14 @@ export class AddEventComponent {
 
   constructor(
     @Inject(DOCUMENT) private readonly documentRef: Document,
-    private modalCtrl: ModalController,
     private eventService: EventService,
     private store: Store,
     private mapStore: MapStoreService,
+    private navCtrl: NavController,
+    private toastCtrl: ToastController,
   ) {}
 
   public closeModal(): void {
-    this.modalCtrl.dismiss(undefined, 'close', MODAL_ID.addEvent).then();
     this.mapStore.setPlace(null);
   }
 
@@ -50,16 +49,29 @@ export class AddEventComponent {
       longitude: this.form.value.longitude,
       latitude: this.form.value.latitude,
     };
+
     this.eventService
       .addEvent(data, currentGroup.id)
       .pipe(first())
-      .subscribe(() => {
-        this.modalCtrl.dismiss(undefined, 'create', MODAL_ID.addEvent).then();
+      .subscribe(async () => {
+        await this.showToastAboutCreateEvent();
+        await this.navCtrl.pop();
         this.mapStore.setPlace(null);
       });
   }
 
   public showMap(): void {
     showMap();
+  }
+
+  private async showToastAboutCreateEvent(): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: 'Событие успешно создано',
+      position: 'bottom',
+      duration: 3000,
+      color: 'success',
+    });
+
+    toast.present().then();
   }
 }
