@@ -2,21 +2,21 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Subject } from 'rxjs';
 import { filter, finalize, first, takeUntil } from 'rxjs/operators';
-import { ModalController, NavController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAboutGroupComponent } from '../info-about-group/info-about-group.component';
 import { DOCUMENT } from '@angular/common';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
 import { Store } from '@ngxs/store';
 import { GroupService } from '../../../shared/rest/group.rest';
 import { UserState } from '../../../shared/store/user/user.state';
-import { SetCurrentGroup } from '../../../shared/store/current-group/current-group.action';
+import { ResetCurrentGroup, SetCurrentGroup } from '../../../shared/store/current-group/current-group.action';
 import { CurrentGroupState } from '../../../shared/store/current-group/current-group.state';
 import { FriendsService } from '../../../shared/rest/friends.rest';
 import { FriendModel } from '../../../shared/models/friend.model';
+import { AddEventComponent } from '../add-event/add-event.component';
 import { EventService } from '../../../shared/rest/event.rest';
 import { EventsModel } from '../../../shared/models/events.model';
 import { InfoAboutEventComponent } from '../info-about-event/info-about-event.component';
-import { ROUTING_NAME } from '../../../shared/consts/routing.const';
 
 @Component({
   selector: 'app-current-group.current-group',
@@ -41,7 +41,6 @@ export class CurrentGroupPage {
     private friendService: FriendsService,
     private toastCtrl: ToastController,
     private eventService: EventService,
-    private navCtrl: NavController,
   ) {}
 
   public ionViewDidEnter(): void {
@@ -53,11 +52,23 @@ export class CurrentGroupPage {
   public ionViewDidLeave(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.store.dispatch(ResetCurrentGroup);
   }
 
   public async createEvent(): Promise<void> {
-    await this.navCtrl.navigateForward([ROUTING_NAME.home, ROUTING_NAME.addEvent]);
-    // this.getEvents();
+    const modal = await this.modalCtrl.create({
+      component: AddEventComponent,
+      id: MODAL_ID.addEvent,
+    });
+    await modal.present();
+    const result = await modal.onDidDismiss();
+
+    if (result.role !== 'create') {
+      return;
+    }
+
+    this.showToastAboutCreateEvent().then();
+    this.getEvents();
   }
 
   public async infoAboutGroup(): Promise<void> {
@@ -128,6 +139,17 @@ export class CurrentGroupPage {
       .subscribe(() => {
         this.getCurrentGroup();
       });
+  }
+
+  private async showToastAboutCreateEvent(): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: 'Событие успешно создано',
+      position: 'bottom',
+      duration: 3000,
+      color: 'success',
+    });
+
+    toast.present().then();
   }
 
   private getEvents(): void {

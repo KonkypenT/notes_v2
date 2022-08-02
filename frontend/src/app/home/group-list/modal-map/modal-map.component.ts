@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { environment } from '../../../../environments/environment';
 import { Geolocation, Geoposition } from '@awesome-cordova-plugins/geolocation/ngx';
@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
   templateUrl: './modal-map.component.html',
   styleUrls: ['./modal-map.component.scss'],
 })
-export class ModalMapComponent implements OnInit, OnDestroy {
+export class ModalMapComponent {
   public marker = null;
 
   private map = null;
@@ -33,7 +33,7 @@ export class ModalMapComponent implements OnInit, OnDestroy {
     private mapStore: MapStoreService,
   ) {}
 
-  public async ngOnInit(): Promise<void> {
+  public async ionViewDidEnter(): Promise<void> {
     this.mapglAPI = await load();
     this.map = new this.mapglAPI.Map('container', {
       center: [55.31878, 25.23584],
@@ -46,7 +46,7 @@ export class ModalMapComponent implements OnInit, OnDestroy {
     this.setMyPosition(coords);
   }
 
-  public ngOnDestroy(): void {
+  public ionViewDidLeave(): void {
     this.map.destroy();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
