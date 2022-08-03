@@ -64,7 +64,6 @@ export class ModalMapComponent {
   }
 
   public applyPlace(): void {
-    console.log(this.selectedPlace);
     this.mapStore.setPlace(this.selectedPlace);
     this.closeModal();
   }
