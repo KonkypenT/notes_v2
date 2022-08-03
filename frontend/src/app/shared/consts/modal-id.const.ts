@@ -5,4 +5,5 @@ export const MODAL_ID = {
   addEvent: 'addEvent',
   infoAboutEvent: 'infoAboutEvent',
   modalMap: 'modalMap',
+  searchMap: 'searchMap',
 };

@@ -3,12 +3,15 @@ import { ModalController } from '@ionic/angular';
 import { environment } from '../../../../environments/environment';
 import { Geolocation, Geoposition } from '@awesome-cordova-plugins/geolocation/ngx';
 import { load } from '@2gis/mapgl';
-import { hideMap } from '../../../shared/functions/toggle-map.function';
 import { MapService } from '../../../shared/rest/map.rest';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { PlaceModel } from '../../../shared/models/place-model';
 import { MapStoreService } from '../../../shared/services/map-store.service';
 import { Subject } from 'rxjs';
+import { MODAL_ID } from '../../../shared/consts/modal-id.const';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { ItemsResultModel } from '../../../shared/models/search-map.model';
+import { SearchType } from '../../../shared/enums/search-type.enum';
 
 @Component({
   selector: 'app-modal-map',
@@ -17,6 +20,10 @@ import { Subject } from 'rxjs';
 })
 export class ModalMapComponent {
   public marker = null;
+
+  public searchValues: any[] = [];
+
+  public searchValue: any;
 
   private map = null;
 
@@ -53,12 +60,42 @@ export class ModalMapComponent {
   }
 
   public closeModal(): void {
-    hideMap();
+    this.modalCtrl.dismiss(undefined, undefined, MODAL_ID.modalMap);
   }
 
   public applyPlace(): void {
+    console.log(this.selectedPlace);
     this.mapStore.setPlace(this.selectedPlace);
-    hideMap();
+    this.closeModal();
+  }
+
+  public async findMe(): Promise<void> {
+    const coords = await this.geolocation.getCurrentPosition();
+    this.setMyPosition(coords);
+  }
+
+  public searchChangeItem(event: { component: IonicSelectableComponent; value: ItemsResultModel }): void {
+    this.mapService
+      .getCoordsByAddress(event.value.id)
+      .pipe(
+        first(),
+        filter((result) => !!result),
+      )
+      .subscribe((result) => {
+        this.setMarkerPosition(result);
+      });
+  }
+
+  public async searchChange(event: { component: IonicSelectableComponent; text: string }): Promise<void> {
+    const coords = await this.geolocation.getCurrentPosition();
+    const { latitude, longitude } = coords.coords;
+    this.mapService
+      .search(event.text, latitude, longitude)
+      .pipe(
+        first(),
+        filter((result) => !!result && !!result.length),
+      )
+      .subscribe((result) => (this.searchValues = this.filterSearchResult(result)));
   }
 
   private setMyPosition(pos: Geoposition) {
@@ -87,13 +124,7 @@ export class ModalMapComponent {
       .getPlaceByCoords(lat, lon)
       .pipe(first())
       .subscribe((result: PlaceModel) => {
-        this.selectedPlace = result;
-        this.marker && this.marker.destroy();
-        this.marker = new this.mapglAPI.Marker(this.map, {
-          coordinates: [lon, lat],
-        });
-
-        this.setMapPosition(lat, lon);
+        this.setMarkerPosition(result);
       });
   }
 
@@ -115,5 +146,20 @@ export class ModalMapComponent {
         this.setMyPosition(coords);
         this.marker && this.marker.destroy();
       });
+  }
+
+  private filterSearchResult(result: ItemsResultModel[]): ItemsResultModel[] {
+    return result.filter((value) => value.type !== SearchType.adm_div && value.type !== SearchType.street);
+  }
+
+  private setMarkerPosition(result: PlaceModel): void {
+    this.selectedPlace = result;
+    console.log(this.selectedPlace);
+    this.marker && this.marker.destroy();
+    this.marker = new this.mapglAPI.Marker(this.map, {
+      coordinates: [result.result.items[0].point.lon, result.result.items[0].point.lat],
+    });
+
+    this.setMapPosition(result.result.items[0].point.lat, result.result.items[0].point.lon);
   }
 }

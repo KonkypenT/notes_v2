@@ -43,5 +43,9 @@ export class Urls {
   public static map = {
     getPlaceByCoords: (lat: number, lon: number): string =>
       `https://catalog.api.2gis.com/3.0/items/geocode?lat=${lat}&lon=${lon}&fields=items.point&key=${environment.dictionaryKey}`,
+    search: (value: string, lat: number, lon: number): string =>
+      `https://catalog.api.2gis.com/3.0/items?q=${value}&sort_point=${lon},${lat}&key=${environment.dictionaryKey}`,
+    searchCoords: (value: string): string =>
+      `https://catalog.api.2gis.com/3.0/items/byid?id=${value}&fields=items.point&key=${environment.dictionaryKey}`,
   };
 }

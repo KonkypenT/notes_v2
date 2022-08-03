@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>Создание события</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-outline" size="large" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -24,8 +24,12 @@
     <ion-item>
       <ion-label position="stacked">Место события</ion-label>
       <ion-input
+        readonly="true"
         [formControl]="form.controls.placeEvent"
-        [value]="(selectedPlace | async)?.result?.items[0]?.full_name"
+        [value]="
+          (selectedPlace | async)?.result?.items[0]?.full_name ||
+          (selectedPlace | async)?.result?.items[0]?.address_name
+        "
       ></ion-input>
       <ion-button slot="end" (click)="showMap()">
         <ion-icon name="map-outline"></ion-icon>

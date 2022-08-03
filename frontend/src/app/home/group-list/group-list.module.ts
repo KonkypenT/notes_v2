@@ -14,6 +14,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { AddEventComponent } from './add-event/add-event.component';
 import { InfoAboutEventComponent } from './info-about-event/info-about-event.component';
 import { ModalMapComponent } from './modal-map/modal-map.component';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 const components = [
   InfoAboutGroupComponent,
@@ -25,7 +26,15 @@ const components = [
 ];
 
 @NgModule({
-  imports: [CommonModule, IonicModule, GroupListPageRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [
+    CommonModule,
+    IonicModule,
+    GroupListPageRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    IonicSelectableModule,
+  ],
   declarations: [GroupListPage, ...components],
 })
 export class GroupListPageModule {}

@@ -7,8 +7,8 @@ import { first } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { CurrentGroupState } from '../../../shared/store/current-group/current-group.state';
 import { DOCUMENT } from '@angular/common';
-import { showMap } from '../../../shared/functions/toggle-map.function';
 import { MapStoreService } from '../../../shared/services/map-store.service';
+import { ModalMapComponent } from '../modal-map/modal-map.component';
 
 @Component({
   selector: 'app-add-event',
@@ -59,7 +59,12 @@ export class AddEventComponent {
       });
   }
 
-  public showMap(): void {
-    showMap();
+  public async showMap(): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: ModalMapComponent,
+      cssClass: 'modal-map',
+      id: MODAL_ID.modalMap,
+    });
+    await modal.present();
   }
 }

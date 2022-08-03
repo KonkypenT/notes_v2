@@ -3,6 +3,11 @@ export interface PlaceModel {
   result: ResultModel;
 }
 
+export interface PointModel {
+  lat: number;
+  lon: number;
+}
+
 interface MetaModel {
   api_version: string;
   code: number;
@@ -12,11 +17,6 @@ interface MetaModel {
 interface ResultModel {
   items: ItemModel[];
   total: number;
-}
-
-interface PointModel {
-  lat: number;
-  lon: number;
 }
 
 interface ItemModel {
