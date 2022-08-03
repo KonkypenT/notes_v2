@@ -15,6 +15,9 @@
         <ion-label position="floating">Пароль</ion-label>
         <ion-input type="password" [formControl]="formAuth.controls.password"></ion-input>
       </ion-item>
+      <ion-label *ngIf="formAuth.controls.password.value && formAuth.getError('passwordInvalid')" class="error">
+        Пароль должен содержать 6 символов, хотя бы одну заглавную букву, цифру и спец. символ
+      </ion-label>
       <div class="error-content"><small>{{ authError }}</small></div>
       <ion-button expand="full" [disabled]="formAuth.invalid" (click)="auth()">Войти</ion-button>
       <p>

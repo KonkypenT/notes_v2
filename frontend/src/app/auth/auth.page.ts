@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../shared/rest/auth.rest';
 import { NavController } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
@@ -9,6 +9,7 @@ import { ERRORS_TEXT } from '../shared/consts/errors-text.const';
 import { JwtModel } from '../shared/models/jwt.model';
 import { Store } from '@ngxs/store';
 import { SetUser } from '../shared/store/user/user.action';
+import { PATTERN } from '../shared/consts/pattern.const';
 
 @Component({
   selector: 'app-auth',
@@ -16,10 +17,13 @@ import { SetUser } from '../shared/store/user/user.action';
   styleUrls: ['auth.page.scss'],
 })
 export class AuthPage {
-  public formAuth = new FormGroup({
-    username: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [Validators.required]),
-  });
+  public formAuth = new FormGroup(
+    {
+      username: new FormControl<string>('', [Validators.required]),
+      password: new FormControl<string>('', [Validators.required]),
+    },
+    { validators: [this.passwordValidator] },
+  );
 
   public authError = '';
 
@@ -52,5 +56,10 @@ export class AuthPage {
 
   public goToRegister(): void {
     this.navCtrl.navigateForward(ROUTING_NAME.register).then();
+  }
+
+  private passwordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    return password.value.match(PATTERN.password) ? null : { passwordInvalid: true };
   }
 }
