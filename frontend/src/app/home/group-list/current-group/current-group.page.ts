@@ -17,6 +17,7 @@ import { AddEventComponent } from '../add-event/add-event.component';
 import { EventService } from '../../../shared/rest/event.rest';
 import { EventsModel } from '../../../shared/models/events.model';
 import { InfoAboutEventComponent } from '../info-about-event/info-about-event.component';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @Component({
   selector: 'app-current-group.current-group',
@@ -41,6 +42,7 @@ export class CurrentGroupPage {
     private friendService: FriendsService,
     private toastCtrl: ToastController,
     private eventService: EventService,
+    private calendar: Calendar
   ) {}
 
   public ionViewDidEnter(): void {
@@ -115,6 +117,23 @@ export class CurrentGroupPage {
       presentingElement: this.documentRef.querySelector('.current-group'),
     });
     modal.present();
+  }
+
+  public async addToCalendar(event: EventsModel): Promise<void> {
+    const startDate = new Date(event.eventDate.toString().split('T')[0]);
+    const endDate = new Date(event.endDate.toString().split('T')[0]);   
+
+    this.calendar.createCalendar({calendarName: 'Мои события', calendarColor: '#00e676'}).then(
+      async () => { 
+        const calendars = await this.calendar.listCalendars();
+        const myCalendar = calendars.find((c) => c.name === 'Мои события');
+        this.calendar.createEventWithOptions(event.title, event.placeEvent, '', startDate, endDate, {calendarName: 'Мои события', calendarId: myCalendar}).then(
+          (msg) => { console.log('create event', msg); },
+          (err) => { console.log('dont create event', err); }
+        );
+      },
+      (err) => { console.log('error', err); }
+    );
   }
 
   private subscribeOnCurrentGroup(): void {

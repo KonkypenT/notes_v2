@@ -8,4 +8,6 @@ export interface EventsModel {
   photo?: string;
   placeEvent: string;
   title: string;
+  latitude: string;
+  longitude: string;
 }

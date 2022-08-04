@@ -18,6 +18,7 @@ import { UnauthorizedInterceptorProvider } from './shared/interceptors/unauthori
 import { FriendsPageModule } from './home/friends/friends.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
     UnauthorizedInterceptorProvider,
     CheckProfileGuard,
     Geolocation,
+    Calendar
   ],
   bootstrap: [AppComponent],
 })
