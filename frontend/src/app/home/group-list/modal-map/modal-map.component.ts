@@ -153,7 +153,6 @@ export class ModalMapComponent {
 
   private setMarkerPosition(result: PlaceModel): void {
     this.selectedPlace = result;
-    console.log(this.selectedPlace);
     this.marker && this.marker.destroy();
     this.marker = new this.mapglAPI.Marker(this.map, {
       coordinates: [result.result.items[0].point.lon, result.result.items[0].point.lat],
