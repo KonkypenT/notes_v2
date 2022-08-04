@@ -37,4 +37,7 @@ export class Event {
 
   @Column({ nullable: true })
   public longitude?: string;
+
+  @Column()
+  public isNativeCalendar: boolean;
 }

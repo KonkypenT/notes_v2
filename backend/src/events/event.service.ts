@@ -23,11 +23,21 @@ export class EventService {
         isActive: true,
         latitude: body.latitude?.toString() || null,
         longitude: body.longitude?.toString() || null,
+        isNativeCalendar: false,
       })
       .execute();
   }
 
   public async getEvents(groupId: number): Promise<EventsModel[]> {
     return await this.eventRepository.findBy({ groupId });
+  }
+
+  public async addEventInCalendar(eventId: number): Promise<void> {
+    await this.eventRepository
+      .createQueryBuilder()
+      .update()
+      .set({ isNativeCalendar: true })
+      .where({ id: eventId })
+      .execute();
   }
 }

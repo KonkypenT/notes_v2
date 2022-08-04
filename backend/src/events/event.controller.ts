@@ -11,6 +11,11 @@ export class EventController {
     await this.eventsService.addEvent(req.body);
   }
 
+  @Post('add-event-in-calendar')
+  public async addEventInCalendar(@Request() req): Promise<void> {
+    await this.eventsService.addEventInCalendar(req.body.id);
+  }
+
   @Get('get-events/:id')
   public async getEvents(@Param() params): Promise<EventsModel[]> {
     return await this.eventsService.getEvents(params.id);

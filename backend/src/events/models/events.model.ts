@@ -10,4 +10,5 @@ export interface EventsModel {
   title: string;
   latitude?: string;
   longitude?: string;
+  isNativeCalendar: boolean;
 }

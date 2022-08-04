@@ -31,6 +31,8 @@ export class CurrentGroupPage {
 
   public events: EventsModel[] | null = null;
 
+  public addedEventsInNativeCalendar: number[] = [];
+
   @ViewChild('listEvent') public listEvent: IonList;
 
   private unsubscribe$ = new Subject<void>();
@@ -136,7 +138,10 @@ export class CurrentGroupPage {
           })
           .then(
             () => {
+              this.eventService.addEventInCalendar(event.id).pipe(first()).subscribe();
               this.listEvent.closeSlidingItems().then();
+              this.addedEventsInNativeCalendar = [...this.addedEventsInNativeCalendar, event.id];
+              this.showToastAboutAddEventInCalendar();
             },
             (err) => {
               console.log('dont create event', err);
@@ -147,6 +152,10 @@ export class CurrentGroupPage {
         console.log('error', err);
       },
     );
+  }
+
+  public getEventIdFromNativeCalendar(eventId: number): boolean {
+    return !!this.addedEventsInNativeCalendar.find((e) => e === eventId);
   }
 
   private subscribeOnCurrentGroup(): void {
@@ -178,6 +187,17 @@ export class CurrentGroupPage {
       message: 'Событие успешно создано',
       position: 'bottom',
       duration: 3000,
+      color: 'success',
+    });
+
+    toast.present().then();
+  }
+
+  private async showToastAboutAddEventInCalendar(): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: 'Событие добавлено в календарь',
+      position: 'bottom',
+      duration: 2000,
       color: 'success',
     });
 

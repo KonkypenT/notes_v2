@@ -25,4 +25,10 @@ export class EventService {
 
     return this.httpClient.get<EventsModel[]>(url);
   }
+
+  public addEventInCalendar(eventId: number): Observable<void> {
+    const url = Urls.events.addEventInCalendar;
+
+    return this.httpClient.post<void>(url, { id: eventId });
+  }
 }
