@@ -30,6 +30,9 @@
         <ion-label position="floating">Пароль</ion-label>
         <ion-input type="password" [formControl]="formRegister.controls.password"></ion-input>
       </ion-item>
+      <ion-label *ngIf="formRegister.controls.password.value && formRegister.getError('passwordInvalid')" class="error">
+        Пароль должен содержать 6 символов, хотя бы одну заглавную букву, цифру и спец. символ
+      </ion-label>
       <div class="error-content"><small>{{ registerError }}</small></div>
       <ion-button expand="full" [disabled]="formRegister.invalid" (click)="register()">Зарегистрироваться</ion-button>
     </form>
