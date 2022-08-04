@@ -60,6 +60,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   public logout(): void {
     this.navCtrl.navigateRoot(ROUTING_NAME.auth).then();
     resetStore(this.store);
+    localStorage.setItem('jwt', null);
   }
 
   private subscribeOnCurrentUser(): void {
