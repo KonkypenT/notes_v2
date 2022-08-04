@@ -13,10 +13,25 @@
       <ion-label position="stacked">Название события</ion-label>
       <ion-input [formControl]="form.controls.title"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item class="item-date" (click)="showEventDatePicker = !showEventDatePicker">
       <ion-label position="stacked">Дата события</ion-label>
-      <ion-input type="date" [formControl]="form.controls.eventDate"></ion-input>
+      <ion-input [hidden]="true" type="date" [formControl]="form.controls.eventDate"></ion-input>
+      <div class="custom-input">
+        <span *ngIf="form.controls.eventDate.value">
+          {{ form.controls.eventDate.value | date: 'dd.MM.yyyy' }}
+        </span>
+        <span *ngIf="!form.controls.eventDate.value">дд.мм.гггг</span>
+      </div>
     </ion-item>
+    <ion-datetime
+      *ngIf="showEventDatePicker"
+      presentation="date"
+      cancelText=""
+      doneText="Принять"
+      [value]="form.controls.eventDate.value"
+      [showDefaultButtons]="false"
+      (ionChange)="changeEventDate($event)"
+    ></ion-datetime>
     <ion-item>
       <ion-label position="stacked">Дата окончания события</ion-label>
       <ion-input type="date" [formControl]="form.controls.endDate"></ion-input>

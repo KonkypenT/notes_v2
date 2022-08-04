@@ -2,6 +2,16 @@
   margin-top: 15px;
 }
 
+ion-datetime {
+  position: absolute;
+  margin-left: 10px;
+  z-index: 9;
+}
+
+.custom-input {
+  margin-top: 10px;
+}
+
 .invalid {
   color: red;
 }
