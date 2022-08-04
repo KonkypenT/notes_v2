@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../shared/rest/auth.rest';
 import { catchError, filter, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { VALIDATORS } from '../shared/consts/validators.const';
 import { NavController, ToastController } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
+import { PATTERN } from '../shared/consts/pattern.const';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,7 @@ export class RegisterPage {
     email: new FormControl<string>('', [Validators.required, Validators.pattern(VALIDATORS.email)]),
     username: new FormControl<string>('', [Validators.required]),
     password: new FormControl<string>('', [Validators.required]),
-  });
+  }, { validators: [this.passwordValidator] },);
 
   public registerError = '';
 
@@ -54,5 +55,10 @@ export class RegisterPage {
       duration: 3000,
     });
     await toast.present();
+  }
+
+  private passwordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    return password.value.match(PATTERN.password) ? null : { passwordInvalid: true };
   }
 }
