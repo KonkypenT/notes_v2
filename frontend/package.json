@@ -1,8 +1,8 @@
 {
-  "name": "notes",
+  "name": "events-with-friend",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Amsterz",
+  "homepage": "http://amsterz.ru/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open --proxy-config proxy.conf.json --port 4202",
@@ -35,7 +35,7 @@
     "@capacitor/ios": "^4.0.0",
     "@capacitor/keyboard": "^4.0.0",
     "@capacitor/status-bar": "^4.0.0",
-    "@ionic/angular": "^6.2.0",
+    "@ionic/angular": "^6.2.1",
     "@ngxs/devtools-plugin": "^3.7.4-dev.master-38cbcac",
     "@ngxs/logger-plugin": "^3.7.4-dev.master-38cbcac",
     "@ngxs/store": "^3.7.4-dev.master-38cbcac",
@@ -82,5 +82,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.7.3"
   },
-  "description": "An Ionic project"
+  "description": "Application for create events with friends"
 }

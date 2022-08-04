@@ -1,6 +1,6 @@
 {
   "appId": "ru.events",
-  "appName": "notes",
+  "appName": "events with friend",
   "webDir": "www",
   "bundledWebRuntime": false,
   "server": {

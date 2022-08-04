@@ -18,10 +18,6 @@ import { ModalMapComponent } from '../modal-map/modal-map.component';
 export class AddEventComponent {
   public selectedPlace = this.mapStore.getPlace();
 
-  public showEventDatePicker = false;
-
-  public showEndEventDatePicker = false;
-
   public form = new FormGroup(
     {
       title: new FormControl<string>('', Validators.required),
@@ -78,14 +74,12 @@ export class AddEventComponent {
   }
 
   public changeEventDate(value: CustomEvent): void {
-    console.log(value);
     this.form.patchValue({ eventDate: value.detail.value });
-    this.showEventDatePicker = false;
   }
 
-  public ionCancel(event: any): void {
-    event.stopPropagation();
-    console.log(event);
+  public changeEndEventDate(value: CustomEvent): void {
+    console.log(value);
+    this.form.patchValue({ endDate: value.detail.value });
   }
 
   private dateValidator(control: AbstractControl): ValidationErrors | null {
