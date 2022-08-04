@@ -20,6 +20,9 @@
     <ion-item>
       <ion-label position="stacked">Дата окончания события</ion-label>
       <ion-input type="date" [formControl]="form.controls.endDate"></ion-input>
+      <small class="invalid" *ngIf="form.getError('invalidDate')">
+        Дата окончания не должна быть раньше даты начала
+      </small>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Место события</ion-label>

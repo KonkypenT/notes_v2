@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
 import { ModalController } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { EventService } from '../../../shared/rest/event.rest';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
@@ -18,14 +18,19 @@ import { ModalMapComponent } from '../modal-map/modal-map.component';
 export class AddEventComponent {
   public selectedPlace = this.mapStore.getPlace();
 
-  public form = new FormGroup({
-    title: new FormControl<string>('', Validators.required),
-    eventDate: new FormControl<Date>(null, Validators.required),
-    endDate: new FormControl<Date>(null, Validators.required),
-    placeEvent: new FormControl<string>('', Validators.required),
-    longitude: new FormControl<number | null>(null),
-    latitude: new FormControl<number | null>(null),
-  });
+  public form = new FormGroup(
+    {
+      title: new FormControl<string>('', Validators.required),
+      eventDate: new FormControl<Date>(null, Validators.required),
+      endDate: new FormControl<Date>(null),
+      placeEvent: new FormControl<string>('', Validators.required),
+      longitude: new FormControl<number | null>(null),
+      latitude: new FormControl<number | null>(null),
+    },
+    {
+      validators: [this.dateValidator],
+    },
+  );
 
   constructor(
     @Inject(DOCUMENT) private readonly documentRef: Document,
@@ -66,5 +71,16 @@ export class AddEventComponent {
       id: MODAL_ID.modalMap,
     });
     await modal.present();
+  }
+
+  private dateValidator(control: AbstractControl): ValidationErrors | null {
+    const eventDate = control.get('eventDate');
+    const endDate = control.get('endDate');
+
+    if (!endDate.value) {
+      return null;
+    }
+
+    return endDate.value < eventDate.value ? { invalidDate: true } : null;
   }
 }
