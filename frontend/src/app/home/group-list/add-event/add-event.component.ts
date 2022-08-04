@@ -78,7 +78,6 @@ export class AddEventComponent {
   }
 
   public changeEndEventDate(value: CustomEvent): void {
-    console.log(value);
     this.form.patchValue({ endDate: value.detail.value });
   }
 

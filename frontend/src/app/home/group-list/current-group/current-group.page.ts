@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Subject } from 'rxjs';
 import { filter, finalize, first, takeUntil } from 'rxjs/operators';
-import { ModalController, ToastController } from '@ionic/angular';
+import { IonList, ModalController, ToastController } from '@ionic/angular';
 import { InfoAboutGroupComponent } from '../info-about-group/info-about-group.component';
 import { DOCUMENT } from '@angular/common';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
@@ -31,6 +31,8 @@ export class CurrentGroupPage {
 
   public events: EventsModel[] | null = null;
 
+  @ViewChild('listEvent') public listEvent: IonList;
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -42,7 +44,7 @@ export class CurrentGroupPage {
     private friendService: FriendsService,
     private toastCtrl: ToastController,
     private eventService: EventService,
-    private calendar: Calendar
+    private calendar: Calendar,
   ) {}
 
   public ionViewDidEnter(): void {
@@ -121,18 +123,29 @@ export class CurrentGroupPage {
 
   public async addToCalendar(event: EventsModel): Promise<void> {
     const startDate = new Date(event.eventDate.toString().split('T')[0]);
-    const endDate = new Date(event.endDate.toString().split('T')[0]);   
+    const endDate = new Date(event.endDate.toString().split('T')[0]);
 
-    this.calendar.createCalendar({calendarName: 'Мои события', calendarColor: '#00e676'}).then(
-      async () => { 
+    this.calendar.createCalendar({ calendarName: 'Мои события', calendarColor: '#00e676' }).then(
+      async () => {
         const calendars = await this.calendar.listCalendars();
         const myCalendar = calendars.find((c) => c.name === 'Мои события');
-        this.calendar.createEventWithOptions(event.title, event.placeEvent, '', startDate, endDate, {calendarName: 'Мои события', calendarId: myCalendar}).then(
-          (msg) => { console.log('create event', msg); },
-          (err) => { console.log('dont create event', err); }
-        );
+        this.calendar
+          .createEventWithOptions(event.title, event.placeEvent, '', startDate, endDate, {
+            calendarName: 'Мои события',
+            calendarId: myCalendar,
+          })
+          .then(
+            () => {
+              this.listEvent.closeSlidingItems().then();
+            },
+            (err) => {
+              console.log('dont create event', err);
+            },
+          );
       },
-      (err) => { console.log('error', err); }
+      (err) => {
+        console.log('error', err);
+      },
     );
   }
 
