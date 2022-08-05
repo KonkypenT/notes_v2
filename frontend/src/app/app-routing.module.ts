@@ -28,6 +28,7 @@ const routes: Routes = [
   {
     path: ROUTING_NAME.home,
     component: HomePage,
+    canActivate: [CheckFirstVisitGuard],
     children: [
       {
         path: ROUTING_NAME.groupList,

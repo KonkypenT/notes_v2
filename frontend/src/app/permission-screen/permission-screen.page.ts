@@ -20,9 +20,8 @@ export class PermissionScreenPage {
   public async goToPermissions(): Promise<void> {
     await this.getPermissionToLocation();
     this.platform.is('capacitor') && (await this.getPermissionToCalendar());
-    await this.goToAuthPage();
-
     localStorage.setItem('visitPermissions', 'true');
+    await this.goToAuthPage();
   }
 
   private async getPermissionToLocation(): Promise<void> {

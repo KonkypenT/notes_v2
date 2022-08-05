@@ -7,9 +7,9 @@
     <key>NSLocationAlwaysUsageDescription</key>
     <string>NSLocationAlwaysUsageDescription</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>NSLocationWhenInUseUsageDescription</string>
+    <string>Доступ к местоположению для того, чтобы вы могли максимально быстро создавать события</string>
     <key>CFBundleDevelopmentRegion</key>
-    <string>en</string>
+    <string>ru</string>
     <key>CFBundleDisplayName</key>
     <string>Мои события</string>
     <key>CFBundleExecutable</key>
