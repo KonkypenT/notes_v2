@@ -25,7 +25,10 @@ class UnauthorizedInterceptor implements HttpInterceptor {
       catchError((error) => {
         if (error.status === HttpStatusCode.Unauthorized) {
           this.navCtrl.navigateRoot(ROUTING_NAME.auth).then();
-          this.showToast().then();
+          const permissions = localStorage.getItem('visitPermissions');
+          if (permissions) {
+            this.showToast().then();
+          }
         }
         console.log(error);
         return of(error);

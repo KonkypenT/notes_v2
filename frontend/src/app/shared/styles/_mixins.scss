@@ -1,0 +1,15 @@
+/**
+* микс для добавление иконки
+*/
+@mixin icon-prepend($icon) {
+  background: url('^assets/icons/#{$icon}.svg') no-repeat;
+  background-size: contain;
+}
+
+/**
+* микс для добавление картинки
+*/
+@mixin image-prepend($icon) {
+  background: url('^assets/images/#{$icon}.png') no-repeat;
+  background-size: contain;
+}

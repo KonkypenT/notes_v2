@@ -9,4 +9,5 @@ export const ROUTING_NAME = {
   myApplications: 'my-applications',
   applicationsToMe: 'applications-to-me',
   currentGroup: 'current-group',
+  permission: 'permission',
 };

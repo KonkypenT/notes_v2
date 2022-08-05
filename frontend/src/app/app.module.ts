@@ -19,6 +19,11 @@ import { FriendsPageModule } from './home/friends/friends.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
+import { CheckFirstVisitGuard } from './shared/guards/check-first-visit.guard';
+
+const GUARDS = [CheckProfileGuard, CheckFirstVisitGuard];
+const INTERCEPTORS = [SessionCookieInterceptorProvider, UnauthorizedInterceptorProvider];
+const PLUGINS = [Geolocation, Calendar];
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,14 +41,7 @@ import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SessionCookieInterceptorProvider,
-    UnauthorizedInterceptorProvider,
-    CheckProfileGuard,
-    Geolocation,
-    Calendar
-  ],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ...INTERCEPTORS, ...GUARDS, ...PLUGINS],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

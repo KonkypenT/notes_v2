@@ -3,11 +3,18 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ROUTING_NAME } from './shared/consts/routing.const';
 import { HomePage } from './home/home.page';
 import { FriendsPage } from './home/friends/friends.page';
+import { CheckFirstVisitGuard } from './shared/guards/check-first-visit.guard';
 
 const routes: Routes = [
   {
+    path: ROUTING_NAME.permission,
+    loadChildren: () =>
+      import('./permission-screen/permission-screen.module').then((m) => m.PermissionScreenPageModule),
+  },
+  {
     path: ROUTING_NAME.auth,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
+    canActivate: [CheckFirstVisitGuard],
   },
   {
     path: '',

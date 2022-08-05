@@ -1,0 +1,94 @@
+<ion-content scroll-y="false">
+  <div class="container">
+    <div class="bubbles">
+      <span style="--i: 11"></span>
+      <span style="--i: 12"></span>
+      <span style="--i: 24"></span>
+      <span style="--i: 10"></span>
+      <span style="--i: 14"></span>
+      <span style="--i: 23"></span>
+      <span style="--i: 18"></span>
+      <span style="--i: 16"></span>
+      <span style="--i: 19"></span>
+      <span style="--i: 20"></span>
+      <span style="--i: 22"></span>
+      <span style="--i: 25"></span>
+      <span style="--i: 18"></span>
+      <span style="--i: 21"></span>
+      <span style="--i: 15"></span>
+      <span style="--i: 13"></span>
+      <span style="--i: 26"></span>
+      <span style="--i: 17"></span>
+      <span style="--i: 13"></span>
+      <span style="--i: 28"></span>
+      <span style="--i: 5"></span>
+      <span style="--i: 2"></span>
+      <span style="--i: 7"></span>
+      <span style="--i: 29"></span>
+      <span style="--i: 9"></span>
+    </div>
+  </div>
+  <ion-slides pager="true">
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Добро пожаловать</ion-card-subtitle>
+          <ion-card-title>Мои события</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Это приложение поможет вам планировать встречи с друзьями и различные мероприятия.
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Добавляйте друзей</ion-card-subtitle>
+          <ion-card-title>Мои события</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Добавляйте друзей и планируйте события вместе. Указывайте место встречи и время, чтобы никто из ваших друзей
+          не пропустил событие.
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Создавайте группы</ion-card-subtitle>
+          <ion-card-title>Мои события</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          В группах можно создавать бесконечное число событий, чтобы чаще встречаться с друзьями или планировать
+          мероприятия.
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Включите разрешения</ion-card-subtitle>
+          <ion-card-title>Разрешения</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>
+            Наше приложение может получать информацию о вашем местоположении для того, чтобы наиболее точно и быстро
+            можно было указать место встречи.
+          </p>
+          <p>
+            Также в приложении есть интеграция с календарём телефона, чтобы можно было добавлять события в календарь и
+            не пропускать их. Календарь напомнит
+          </p>
+
+          <div class="card-footer">
+            <ion-button color="primary" (click)="goToPermissions()">Перейти к разрешениям</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
