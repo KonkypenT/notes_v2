@@ -4,6 +4,7 @@ import { ROUTING_NAME } from './shared/consts/routing.const';
 import { HomePage } from './home/home.page';
 import { FriendsPage } from './home/friends/friends.page';
 import { CheckFirstVisitGuard } from './shared/guards/check-first-visit.guard';
+import { CheckProfileGuard } from './shared/guards/check-profile.guard';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
   {
     path: ROUTING_NAME.home,
     component: HomePage,
-    canActivate: [CheckFirstVisitGuard],
+    canActivate: [CheckFirstVisitGuard, CheckProfileGuard],
     children: [
       {
         path: ROUTING_NAME.groupList,
