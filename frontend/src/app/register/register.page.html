@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button text="Назад"></ion-back-button>
@@ -7,34 +7,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large" class="ion-title">
+        <div>Регистрация</div>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
   <div class="container">
     <form class="form" [formGroup]="formRegister">
-      <ion-item>
-        <ion-label position="floating">Имя</ion-label>
-        <ion-input [formControl]="formRegister.controls.firstName"></ion-input>
+      <ion-item class="input-radius" lines="none">
+        <ion-input placeholder="Имя" [formControl]="formRegister.controls.firstName"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Фамилия</ion-label>
-        <ion-input [formControl]="formRegister.controls.surname"></ion-input>
+      <ion-item class="input-radius" lines="none">
+        <ion-input placeholder="Фамилия" [formControl]="formRegister.controls.surname"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">E-mail</ion-label>
-        <ion-input type="email" [formControl]="formRegister.controls.email"></ion-input>
+      <ion-item class="input-radius" lines="none">
+        <ion-input placeholder="E-mail" type="email" [formControl]="formRegister.controls.email"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Логин</ion-label>
-        <ion-input [formControl]="formRegister.controls.username"></ion-input>
+      <ion-item class="input-radius" lines="none">
+        <ion-input placeholder="Логин" [formControl]="formRegister.controls.username"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Пароль</ion-label>
-        <ion-input type="password" [formControl]="formRegister.controls.password"></ion-input>
+      <ion-item class="input-radius" lines="none">
+        <ion-input placeholder="Пароль" type="password" [formControl]="formRegister.controls.password"></ion-input>
+        <ion-label
+          *ngIf="formRegister.controls.password.value && formRegister.getError('passwordInvalid')"
+          class="error"
+          slot="error"
+        >
+          <div>Пароль должен содержать 6 символов, хотя бы одну заглавную букву, цифру и спец. символ</div>
+        </ion-label>
       </ion-item>
-      <ion-label *ngIf="formRegister.controls.password.value && formRegister.getError('passwordInvalid')" class="error">
-        Пароль должен содержать 6 символов, хотя бы одну заглавную букву, цифру и спец. символ
-      </ion-label>
       <div class="error-content"><small>{{ registerError }}</small></div>
-      <ion-button expand="full" [disabled]="formRegister.invalid" (click)="register()">Зарегистрироваться</ion-button>
+      <ion-button class="button-radius" expand="block" [disabled]="formRegister.invalid" (click)="register()">
+        Зарегистрироваться
+      </ion-button>
     </form>
   </div>
 </ion-content>

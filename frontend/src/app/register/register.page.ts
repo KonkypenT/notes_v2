@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 import { VALIDATORS } from '../shared/consts/validators.const';
 import { NavController, ToastController } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
-import { PATTERN } from '../shared/consts/pattern.const';
 
 @Component({
   selector: 'app-register',
@@ -14,13 +13,16 @@ import { PATTERN } from '../shared/consts/pattern.const';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
-  public formRegister = new FormGroup({
-    firstName: new FormControl<string>('', [Validators.required]),
-    surname: new FormControl<string>('', [Validators.required]),
-    email: new FormControl<string>('', [Validators.required, Validators.pattern(VALIDATORS.email)]),
-    username: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [Validators.required]),
-  }, { validators: [this.passwordValidator] },);
+  public formRegister = new FormGroup(
+    {
+      firstName: new FormControl<string>('', [Validators.required]),
+      surname: new FormControl<string>('', [Validators.required]),
+      email: new FormControl<string>('', [Validators.required, Validators.pattern(VALIDATORS.email)]),
+      username: new FormControl<string>('', [Validators.required]),
+      password: new FormControl<string>('', [Validators.required, Validators.pattern(VALIDATORS.password)]),
+    },
+    { validators: [this.passwordValidator] },
+  );
 
   public registerError = '';
 
@@ -59,6 +61,6 @@ export class RegisterPage {
 
   private passwordValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
-    return password.value.match(PATTERN.password) ? null : { passwordInvalid: true };
+    return password.value.match(VALIDATORS.password) ? null : { passwordInvalid: true };
   }
 }

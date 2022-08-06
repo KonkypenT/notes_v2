@@ -1,0 +1,15 @@
+.input-radius {
+  border-radius: 20px;
+}
+
+@media (prefers-color-scheme: light) {
+  .input-radius {
+    --background: #f8f8fB;
+  }
+}
+/* Apply a dark color scheme */
+@media (prefers-color-scheme: dark) {
+  .input-radius {
+    --background: #1e1e1e;
+  }
+}
