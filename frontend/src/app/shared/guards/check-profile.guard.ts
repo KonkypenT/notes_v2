@@ -11,15 +11,15 @@ export class CheckProfileGuard implements CanActivate {
   public canActivate(): boolean {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-      this.navCtrl.navigateRoot([ROUTING_NAME.auth])
+      this.navCtrl.navigateRoot([ROUTING_NAME.auth]);
       return false;
     }
 
     if (jwt === 'null') {
-      this.navCtrl.navigateRoot([ROUTING_NAME.auth])
+      this.navCtrl.navigateRoot([ROUTING_NAME.auth]);
       return false;
     }
-    
+
     const jwtData = parseJwt(jwt);
     const currentUnix = Math.round(new Date().getTime() / 1000);
 

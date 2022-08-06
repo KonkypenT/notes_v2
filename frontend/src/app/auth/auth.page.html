@@ -20,7 +20,12 @@
         <ion-input placeholder="Логин" [formControl]="formAuth.controls.username" (ionFocus)="focusInput()"></ion-input>
       </ion-item>
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="Пароль" type="password" [formControl]="formAuth.controls.password" (ionFocus)="focusInput()"></ion-input>
+        <ion-input
+          placeholder="Пароль"
+          type="password"
+          [formControl]="formAuth.controls.password"
+          (ionFocus)="focusInput()"
+        ></ion-input>
       </ion-item>
       <div class="error-content"><small>{{ authError }}</small></div>
       <ion-button class="button-radius" expand="block" [disabled]="formAuth.invalid" (click)="auth()">Войти</ion-button>

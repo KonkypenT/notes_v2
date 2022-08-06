@@ -16,12 +16,10 @@ import { SetUser } from '../shared/store/user/user.action';
   styleUrls: ['auth.page.scss'],
 })
 export class AuthPage {
-  public formAuth = new FormGroup(
-    {
-      username: new FormControl<string>('', [Validators.required]),
-      password: new FormControl<string>('', [Validators.required]),
-    },
-  );
+  public formAuth = new FormGroup({
+    username: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [Validators.required]),
+  });
 
   public authError = '';
 
