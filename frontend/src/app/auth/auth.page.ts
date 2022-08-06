@@ -55,4 +55,8 @@ export class AuthPage {
   public goToRegister(): void {
     this.navCtrl.navigateForward(ROUTING_NAME.register).then();
   }
+
+  public focusInput(): void {
+    this.authError = '';
+  }
 }
