@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/rest/auth.rest';
 import { NavController } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
-import { catchError, first, switchMap } from 'rxjs/operators';
+import { catchError, finalize, first, switchMap } from 'rxjs/operators';
 import { HttpStatusCode } from '@angular/common/http';
 import { ERRORS_TEXT } from '../shared/consts/errors-text.const';
 import { JwtModel } from '../shared/models/jwt.model';
@@ -23,9 +23,16 @@ export class AuthPage {
 
   public authError = '';
 
+  public sendRequestAuth = false;
+
   constructor(private authService: AuthService, private navCtrl: NavController, private store: Store) {}
 
   public auth(): void {
+    if (this.sendRequestAuth) {
+      return;
+    }
+
+    this.sendRequestAuth = true;
     const { username, password } = this.formAuth.value;
     const formatName = username.toLowerCase();
 
@@ -43,6 +50,7 @@ export class AuthPage {
           localStorage.setItem('jwt', result.access_token);
           return this.authService.getProfile();
         }),
+        finalize(() => (this.sendRequestAuth = false)),
       )
       .subscribe((result) => {
         this.store.dispatch(new SetUser(result));
@@ -51,6 +59,10 @@ export class AuthPage {
   }
 
   public goToRegister(): void {
+    if (this.sendRequestAuth) {
+      return;
+    }
+
     this.navCtrl.navigateForward(ROUTING_NAME.register).then();
   }
 

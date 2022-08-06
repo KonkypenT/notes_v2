@@ -87,6 +87,10 @@ export class GroupListPage {
       .then();
   }
 
+  public showSettingsGroup(event: Event): void {
+    event.stopPropagation();
+  }
+
   private subscribeOnCurrentUser(): void {
     this.store
       .select(UserState.getUser)

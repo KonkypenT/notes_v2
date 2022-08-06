@@ -35,7 +35,7 @@
         <ion-item-option
           color="primary"
           (click)="addToCalendar(event)"
-          [disabled]="event.isNativeCalendar || getEventIdFromNativeCalendar(event.id)"
+          [disabled]="getEventIdFromNativeCalendar(event.id)"
         >
           Добавить в календарь
         </ion-item-option>

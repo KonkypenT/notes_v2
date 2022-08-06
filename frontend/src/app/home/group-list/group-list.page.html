@@ -25,6 +25,7 @@
           <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>
         </ion-avatar>
         <ion-label>{{group.title}}</ion-label>
+        <ion-icon name="ellipsis-vertical-outline" slot="end" (click)="showSettingsGroup($event)"></ion-icon>
       </ion-item>
     </ion-item-sliding>
   </ion-list>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,16 +12,12 @@ import { UserState } from '../../../shared/store/user/user.state';
   templateUrl: './create-group.component.html',
   styleUrls: ['./create-group.component.scss'],
 })
-export class CreateGroupComponent implements OnInit {
+export class CreateGroupComponent {
   public form = new FormGroup<GroupFormModel>({
     title: new FormControl<string>('', [Validators.required]),
   });
 
   constructor(private modalCtrl: ModalController, private store: Store) {}
-
-  public ngOnInit(): void {
-    this.form.valueChanges.subscribe(console.log);
-  }
 
   public closeModal(): void {
     this.modalCtrl.dismiss(undefined, 'close', MODAL_ID.createGroup).then();
