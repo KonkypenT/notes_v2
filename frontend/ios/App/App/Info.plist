@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>NSCameraUsageDescription (Privacy - Camera Usage Description)</key>
-    <string>Доступ к камере необходим для добавление фото к профилю, группам и событиям<string>
-    <key>NSPhotoLibraryAddUsageDescription (Privacy - Photo Library Additions Usage Description)</key>
-    <string>Доступ к галереи необходим для добавление фото к профилю, группам и событиям<string>
-    <key>NSPhotoLibraryUsageDescription (Privacy - Photo Library Usage Description)</key>
-    <string>Доступ к галереи необходим для добавление фото к профилю, группам и событиям<string>
+    <key>NSCameraUsageDescription</key>
+    <string>Доступ к камере необходим для добавление фото к профилю, группам и событиям</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Доступ к галереи необходим для добавление фото к профилю, группам и событиям</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Доступ к галереи необходим для добавление фото к профилю, группам и событиям</string>
     <key>NSCalendarsUsageDescription</key>
     <string>Доступ к календарю необходим для сохранения ваших событий в календарь</string>
     <key>NSLocationAlwaysUsageDescription</key>

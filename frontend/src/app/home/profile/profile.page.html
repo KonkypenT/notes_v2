@@ -19,7 +19,7 @@
 
   <div class="container">
     <form class="form" [formGroup]="form">
-      <ion-avatar *ngIf="(currentUser | async) as user">
+      <ion-avatar *ngIf="(currentUser | async) as user" (click)="clickOnAvatar()">
         <img *ngIf="user.photo" [src]="user.photo" />
         <div *ngIf="!user.photo" class="fake-photo" [attr.data-name]="user.firstName[0] + user.surname[0]"></div>
       </ion-avatar>

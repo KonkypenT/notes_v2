@@ -10,6 +10,8 @@ import { NavController } from '@ionic/angular';
 import { ROUTING_NAME } from '../../shared/consts/routing.const';
 import { UserModel } from '../../shared/models/user.model';
 import { resetStore } from '../../shared/functions/reset-store.function';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CameraHelperService } from 'src/app/shared/services/camera-helper.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +33,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private store: Store, private userService: UserService, private navCtrl: NavController) {}
+  constructor(private store: Store, private userService: UserService, private navCtrl: NavController, private cameraHelperService: CameraHelperService) {}
 
   public ngOnInit(): void {
     this.subscribeOnCurrentUser();
@@ -61,6 +63,11 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.navCtrl.navigateRoot(ROUTING_NAME.auth).then();
     resetStore(this.store);
     localStorage.setItem('jwt', null);
+  }
+
+  public async clickOnAvatar(): Promise<void> {
+    const result = await this.cameraHelperService.showActionSheet();
+    console.log(result);
   }
 
   private subscribeOnCurrentUser(): void {
