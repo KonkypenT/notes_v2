@@ -3,6 +3,7 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
+import { Camera } from '@capacitor/camera';
 
 @Component({
   selector: 'app-permission-screen',
@@ -20,6 +21,7 @@ export class PermissionScreenPage {
   public async goToPermissions(): Promise<void> {
     await this.getPermissionToLocation();
     this.platform.is('capacitor') && (await this.getPermissionToCalendar());
+    await this.getPermissionToCamera();
     localStorage.setItem('visitPermissions', 'true');
     await this.goToAuthPage();
   }
@@ -30,6 +32,10 @@ export class PermissionScreenPage {
 
   private async getPermissionToCalendar(): Promise<void> {
     await this.calendar.requestReadWritePermission();
+  }
+
+  private async getPermissionToCamera(): Promise<void> {
+    await Camera.requestPermissions();
   }
 
   private async goToAuthPage(): Promise<void> {
