@@ -17,14 +17,35 @@
 
   <ion-spinner name="crescent" *ngIf="!groups"></ion-spinner>
 
-  <ion-list *ngIf="groups?.length">
-    <ion-item *ngFor="let group of groups" class="item ion-item-radius" (click)="goToGroup(group)" lines="none">
+  <ion-list class="list" *ngIf="groups?.length">
+    <ion-item
+      *ngFor="let group of groups; let index = index"
+      class="ion-item-radius"
+      (click)="goToGroup(group)"
+      lines="none"
+    >
       <ion-avatar *ngIf="group" slot="start">
         <img *ngIf="group.photo" [src]="group.photo" />
         <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>
       </ion-avatar>
       <ion-label>{{group.title}}</ion-label>
-      <ion-icon name="ellipsis-vertical-outline" slot="end" (click)="showSettingsGroup($event)"></ion-icon>
+      <ion-icon
+        [id]="'left-start-' + index"
+        class="settings"
+        name="ellipsis-vertical-outline"
+        slot="end"
+        (click)="showSettingsGroup($event)"
+      ></ion-icon>
+      <ion-popover [trigger]="'left-start-' + index" side="left" alignment="center" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item [button]="true" [detail]="false" lines="none">Удалить группу</ion-item>
+              <ion-item [button]="true" [detail]="false" lines="none">Выйти из группы</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
     </ion-item>
   </ion-list>
 </ion-content>
