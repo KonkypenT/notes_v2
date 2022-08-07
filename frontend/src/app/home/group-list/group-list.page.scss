@@ -1,7 +1,12 @@
 @import 'spinner';
 
+ion-list {
+  padding: 0 10px;
+}
+
 .item {
   margin-top: 15px;
+  --padding-start: 0;
 }
 
 ion-avatar {

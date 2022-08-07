@@ -1,15 +1,15 @@
-.input-radius {
+.ion-item-radius {
   --border-radius: 20px;
 }
 
 @media (prefers-color-scheme: light) {
-  .input-radius {
+  .ion-item-radius {
     --background: #f8f8fB;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .input-radius {
+  .ion-item-radius {
     --background: #1e1e1e;
   }
 }
