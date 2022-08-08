@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../shared/rest/auth.rest';
-import {SetUser} from '../shared/store/user/user.action';
-import {Store} from '@ngxs/store';
-import {MenuController, NavController} from '@ionic/angular';
-import {ROUTING_NAME} from '../shared/consts/routing.const';
-import {first} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/rest/auth.rest';
+import { SetUser } from '../shared/store/user/user.action';
+import { Store } from '@ngxs/store';
+import { MenuController, NavController } from '@ionic/angular';
+import { ROUTING_NAME } from '../shared/consts/routing.const';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -22,9 +22,7 @@ export class HomePage implements OnInit {
   public ngOnInit(): void {
     this.authService
       .getProfile()
-      .pipe(
-        first(),
-      )
+      .pipe(first())
       .subscribe((result) => this.store.dispatch(new SetUser(result)));
   }
 
