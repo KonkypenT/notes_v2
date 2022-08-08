@@ -56,7 +56,7 @@ export class UsersService {
   public async setPhoto(value: any, user: Partial<UserModel>): Promise<void> {
     const load = await this.s3
       .upload({
-        Bucket: 'cg11909-2ab17f15-8aaa-4bf5-b248-758bb5ced9a8',
+        Bucket: 'cg11909-my-events',
         Key: `${user.id}-avatar`,
         Body: value.buffer,
         ContentType: value.mimetype,
@@ -67,18 +67,9 @@ export class UsersService {
       .createQueryBuilder()
       .update()
       .set({
-        photo: load.Key,
+        photo: load.Location,
       })
       .where({ id: user.id })
       .execute();
-  }
-
-  public async getPhotoUser(user: Partial<UserModel>): Promise<any> {
-    return await this.s3
-      .getObject({
-        Bucket: 'cg11909-2ab17f15-8aaa-4bf5-b248-758bb5ced9a8',
-        Key: `${user.id}-avatar`,
-      })
-      .promise();
   }
 }
