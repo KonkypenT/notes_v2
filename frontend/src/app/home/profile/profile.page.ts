@@ -77,7 +77,6 @@ export class ProfilePage implements OnInit, OnDestroy {
       const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
       this.userService.setPhoto(blob).pipe(first()).subscribe();
     }
-    console.log(result);
   }
 
   private subscribeOnCurrentUser(): void {
