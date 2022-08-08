@@ -21,6 +21,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       firstName: user.firstName,
       surname: user.surname,
       email: user.email,
+      photo: user.photo,
     };
   }
 }

@@ -1,60 +1,62 @@
-import { Injectable } from "@angular/core";
-import { Camera, CameraDirection, CameraResultType, CameraSource } from "@capacitor/camera";
-import { ActionSheetController } from "@ionic/angular";
+import { Injectable } from '@angular/core';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ActionSheetController } from '@ionic/angular';
+import { ChoosePhotoModel } from '../models/choose-photo.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CameraHelperService {
   constructor(private actionSheetCtrl: ActionSheetController) {}
 
-  public async showActionSheet(canDeletePhoto: boolean = true, canAddPhoto: boolean = true): Promise<{ role: string, data: string }> {
+  public async showActionSheet(canDeletePhoto: boolean = true, canAddPhoto: boolean = true): Promise<ChoosePhotoModel> {
     const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [{
-        text: 'Удалить',
-        role: 'destructive',
-        icon: 'trash',
-        id: 'delete-button',
-        data: {
-          type: 'delete'
+      buttons: [
+        {
+          text: 'Удалить',
+          role: 'destructive',
+          id: 'delete-button',
+          data: {
+            type: 'delete',
+          },
+          handler: () => {
+            console.log('Delete clicked');
+          },
         },
-        handler: () => {
-          console.log('Delete clicked');
-        }
-      }, {
-        text: 'Камера',
-        icon: 'camera',
-        handler: async () => {
-          const camera = await Camera.getPhoto({
-            resultType: CameraResultType.Base64, 
-            direction: CameraDirection.Front,
-            presentationStyle: 'fullscreen',
-            source: CameraSource.Camera
-          });
-          await actionSheet.dismiss(camera, 'camera');
-        }
-      }, 
-      {
-        text: 'Выбрать фото',
-        data: 'galery',
-        icon: 'image-outline',
-        handler: async () => {
-          const photo = await Camera.getPhoto({
-            resultType: CameraResultType.Base64,
-            presentationStyle: 'fullscreen',
-            source: CameraSource.Photos
-          });
-          await actionSheet.dismiss(photo, 'galery');
-        }
-      }, 
-      {
-        text: 'Отмена',
-        icon: 'close',
-        role: 'cancel',
-      }]
+        {
+          text: 'Сделать снимок',
+          handler: async () => {
+            const camera = await Camera.getPhoto({
+              resultType: CameraResultType.DataUrl,
+              direction: CameraDirection.Front,
+              presentationStyle: 'fullscreen',
+              source: CameraSource.Camera,
+            });
+            await actionSheet.dismiss(camera, 'camera');
+          },
+        },
+        {
+          text: 'Выбрать фото',
+          data: 'galery',
+          handler: async () => {
+            const photo = await Camera.getPhoto({
+              resultType: CameraResultType.DataUrl,
+              presentationStyle: 'fullscreen',
+              source: CameraSource.Photos,
+            });
+            console.log(photo);
+            await actionSheet.dismiss(photo, 'galery');
+          },
+        },
+        {
+          text: 'Отмена',
+          role: 'cancel',
+        },
+      ],
     });
     await actionSheet.present();
 
     const { role, data } = await actionSheet.onDidDismiss();
-    
+    console.log(role, data);
+
     return { role, data };
   }
 }

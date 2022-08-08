@@ -4,10 +4,11 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { ERRORS_TEXT } from '../shared/consts/errors-text.const';
 import { UserModel } from './user.model';
+import { InjectS3, S3 } from 'nestjs-s3';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
+  constructor(@InjectRepository(User) private usersRepository: Repository<User>, @InjectS3() private readonly s3: S3) {}
 
   public async findOneByUsername(username: string): Promise<User> {
     return await this.usersRepository.findOneBy({ username });
@@ -50,5 +51,34 @@ export class UsersService {
       };
     });
     return users?.length ? data : [];
+  }
+
+  public async setPhoto(value: any, user: Partial<UserModel>): Promise<void> {
+    const load = await this.s3
+      .upload({
+        Bucket: 'cg11909-2ab17f15-8aaa-4bf5-b248-758bb5ced9a8',
+        Key: `${user.id}-avatar`,
+        Body: value.buffer,
+        ContentType: value.mimetype,
+      })
+      .promise();
+
+    await this.usersRepository
+      .createQueryBuilder()
+      .update()
+      .set({
+        photo: load.Key,
+      })
+      .where({ id: user.id })
+      .execute();
+  }
+
+  public async getPhotoUser(user: Partial<UserModel>): Promise<any> {
+    return await this.s3
+      .getObject({
+        Bucket: 'cg11909-2ab17f15-8aaa-4bf5-b248-758bb5ced9a8',
+        Key: `${user.id}-avatar`,
+      })
+      .promise();
   }
 }

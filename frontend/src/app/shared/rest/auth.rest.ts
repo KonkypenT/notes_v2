@@ -28,4 +28,10 @@ export class AuthService {
 
     return this.httpClient.get<UserModel>(url);
   }
+
+  public getPhotoProfile(): Observable<any> {
+    const url = Urls.profile.getPhoto;
+
+    return this.httpClient.get<any>(url);
+  }
 }

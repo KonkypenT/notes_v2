@@ -19,4 +19,12 @@ export class UserService {
 
     return this.httpClient.get<Partial<UserModel[]>>(url);
   }
+
+  public setPhoto(photo: Blob): Observable<Partial<UserModel>> {
+    const url = Urls.profile.setPhoto;
+    const formData = new FormData();
+    formData.append('photo', photo);
+
+    return this.httpClient.post<Partial<UserModel>>(url, formData);
+  }
 }

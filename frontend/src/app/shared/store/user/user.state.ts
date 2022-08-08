@@ -1,7 +1,7 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UserModel } from '../../models/user.model';
 import { Injectable } from '@angular/core';
-import { ResetUser, SetUser } from './user.action';
+import { ResetUser, SetUser, UpdateUserPhoto } from './user.action';
 
 @State<UserModel | null>({
   name: 'user',
@@ -22,5 +22,12 @@ export class UserState {
   @Action(ResetUser)
   public resetUser(ctx: StateContext<UserModel> | null): void {
     ctx.setState(null);
+  }
+
+  @Action(UpdateUserPhoto)
+  public updateUserPhoto(ctx: StateContext<UserModel | null>, { photo }: UpdateUserPhoto): void {
+    ctx.patchState({
+      photo,
+    });
   }
 }

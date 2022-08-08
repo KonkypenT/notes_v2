@@ -10,8 +10,8 @@ import { NavController } from '@ionic/angular';
 import { ROUTING_NAME } from '../../shared/consts/routing.const';
 import { UserModel } from '../../shared/models/user.model';
 import { resetStore } from '../../shared/functions/reset-store.function';
-import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CameraHelperService } from 'src/app/shared/services/camera-helper.service';
+import { UpdateUserPhoto } from '../../shared/store/user/user.action';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +21,7 @@ import { CameraHelperService } from 'src/app/shared/services/camera-helper.servi
 export class ProfilePage implements OnInit, OnDestroy {
   public form = new FormGroup<ProfileFormModel>({
     id: new FormControl<number>(null),
-    username: new FormControl<string>('', [Validators.required]),
+    username: new FormControl<string>({ value: '', disabled: true }, [Validators.required]),
     firstName: new FormControl<string>('', [Validators.required]),
     surname: new FormControl<string>('', [Validators.required]),
     email: new FormControl<string>({ value: '', disabled: true }, [Validators.required]),
@@ -33,7 +33,12 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private store: Store, private userService: UserService, private navCtrl: NavController, private cameraHelperService: CameraHelperService) {}
+  constructor(
+    private store: Store,
+    private userService: UserService,
+    private navCtrl: NavController,
+    private cameraHelperService: CameraHelperService,
+  ) {}
 
   public ngOnInit(): void {
     this.subscribeOnCurrentUser();
@@ -65,8 +70,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     localStorage.setItem('jwt', null);
   }
 
-  public async clickOnAvatar(): Promise<void> {
+  public async showActionSheet(): Promise<void> {
     const result = await this.cameraHelperService.showActionSheet();
+    if (result?.data?.dataUrl) {
+      this.store.dispatch(new UpdateUserPhoto(result.data.dataUrl));
+      const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
+      this.userService.setPhoto(blob).pipe(first()).subscribe();
+    }
     console.log(result);
   }
 
