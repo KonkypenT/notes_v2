@@ -24,19 +24,9 @@ import { MembersController } from './members/members.controller';
 import { Event } from './events/entity/event.entity';
 import { EventController } from './events/event.controller';
 import { EventModule } from './events/event.module';
-import { S3Module } from 'nestjs-s3';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
-    S3Module.forRoot({
-      config: {
-        accessKeyId: 'cg11909',
-        secretAccessKey: 'acursynxtahib3te9seu28mv51ayytdp',
-        endpoint: 'https://s3.timeweb.com',
-        region: 'ru-1',
-      },
-    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '85.193.89.177',

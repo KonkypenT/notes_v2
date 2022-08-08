@@ -5,15 +5,10 @@ import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { UserModel } from './users/user.model';
 import { JwtModel } from './shared/models/jwt.model';
-import { UsersService } from './users/users.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    private registerService: RegisterService,
-    private authService: AuthService,
-    private userService: UsersService,
-  ) {}
+  constructor(private registerService: RegisterService, private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
   @Header('content-type', 'application/json')
@@ -26,12 +21,6 @@ export class AppController {
   @Get('profile')
   public async getProfile(@Request() req): Promise<Partial<UserModel>> {
     return await req.user;
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('photo-profile')
-  public async getPhotoProfile(@Request() req): Promise<Partial<UserModel>> {
-    return await this.userService.getPhotoUser(req.user);
   }
 
   @Post('register')
