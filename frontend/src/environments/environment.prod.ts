@@ -1,4 +1,4 @@
-const host = 'http://89.223.126.211:3000';
+const host = 'http://188.225.44.50:3000';
 
 export const environment = {
   production: true,

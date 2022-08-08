@@ -3,7 +3,7 @@ const fs = require('fs');
 const getRepoInfo = require('git-repo-info');
 
 const fileOriginal = fs.readFileSync('capacitor.config.json', 'utf8');
-const url = process.env.NODE_ENV === 'tst' ? '89.223.126.211:3000' : '89.223.126.211:3000';
+const url = process.env.NODE_ENV === 'tst' ? '188.225.44.50:3000' : '188.225.44.50:3000';
 const appId = process.env.NODE_ENV === 'tst' ? 'ru.events' : 'ru.events';
 
 const obj = JSON.parse(fileOriginal);

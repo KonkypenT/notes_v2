@@ -1,6 +1,6 @@
 {
   "/notes": {
-    "target": "http://89.223.126.211:3000",
+    "target": "http://188.225.44.50:3000",
     "secure": false,
     "logLevel": "debug"
   }

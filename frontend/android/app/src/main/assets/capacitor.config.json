@@ -4,6 +4,6 @@
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"server": {
-		"hostname": "89.223.126.211:3000"
+		"hostname": "188.225.44.50:3000"
 	}
 }
