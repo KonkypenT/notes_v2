@@ -57,7 +57,7 @@ export class UsersService {
     const load = await this.s3
       .upload({
         Bucket: 'cg11909-my-events',
-        Key: `${user.id}-avatar`,
+        Key: `${user.id}-avatar-${new Date().getTime()}`,
         Body: value.buffer,
         ContentType: value.mimetype,
       })
