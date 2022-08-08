@@ -10,7 +10,6 @@ export class Urls {
     getProfile: `${environment.baseUrl}/profile`,
     edit: `${environment.baseUrl}/user/edit`,
     setPhoto: `${environment.baseUrl}/user/set-photo`,
-    getPhoto: `${environment.baseUrl}/photo-profile`,
   };
 
   public static user = {

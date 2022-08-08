@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../shared/rest/auth.rest';
-import { SetUser, UpdateUserPhoto } from '../shared/store/user/user.action';
-import { Store } from '@ngxs/store';
-import { MenuController, NavController } from '@ionic/angular';
-import { ROUTING_NAME } from '../shared/consts/routing.const';
-import { first, switchMap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../shared/rest/auth.rest';
+import {SetUser} from '../shared/store/user/user.action';
+import {Store} from '@ngxs/store';
+import {MenuController, NavController} from '@ionic/angular';
+import {ROUTING_NAME} from '../shared/consts/routing.const';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -24,15 +24,8 @@ export class HomePage implements OnInit {
       .getProfile()
       .pipe(
         first(),
-        switchMap((result) => {
-          this.store.dispatch(new SetUser(result));
-          return this.authService.getPhotoProfile();
-        }),
       )
-      .subscribe((result) => {
-        const image = btoa(result.Body.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
-        this.store.dispatch(new UpdateUserPhoto(image));
-      });
+      .subscribe((result) => this.store.dispatch(new SetUser(result)));
   }
 
   public async goToProfile(): Promise<void> {
