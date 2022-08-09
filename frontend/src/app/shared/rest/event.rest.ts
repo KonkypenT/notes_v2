@@ -31,4 +31,12 @@ export class EventService {
 
     return this.httpClient.post<void>(url, { id: eventId });
   }
+
+  public setPhoto(photo: Blob, eventId: number): Observable<void> {
+    const url = Urls.events.setPhoto(eventId);
+    const formData = new FormData();
+    formData.append('photo', photo);
+
+    return this.httpClient.post<void>(url, formData);
+  }
 }

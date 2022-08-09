@@ -3,10 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entity/event.entity';
 import { EventsModel } from './models/events.model';
+import { InjectS3, S3 } from 'nestjs-s3';
 
 @Injectable()
 export class EventService {
-  constructor(@InjectRepository(Event) private eventRepository: Repository<Event>) {}
+  constructor(
+    @InjectRepository(Event) private eventRepository: Repository<Event>,
+    @InjectS3() private readonly s3: S3,
+  ) {}
 
   public async addEvent({ body, groupId }): Promise<void> {
     await this.eventRepository
@@ -37,6 +41,26 @@ export class EventService {
       .createQueryBuilder()
       .update()
       .set({ isNativeCalendar: true })
+      .where({ id: eventId })
+      .execute();
+  }
+
+  public async setPhoto(value: any, eventId: number): Promise<void> {
+    const load = await this.s3
+      .upload({
+        Bucket: 'cg11909-my-events',
+        Key: `event-${eventId}-avatar`,
+        Body: value.buffer,
+        ContentType: value.mimetype,
+      })
+      .promise();
+
+    await this.eventRepository
+      .createQueryBuilder()
+      .update()
+      .set({
+        photo: load.Location,
+      })
       .where({ id: eventId })
       .execute();
   }

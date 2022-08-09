@@ -16,13 +16,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-spinner name="crescent" *ngIf="!events"></ion-spinner>
+  <ion-spinner name="crescent" *ngIf="!(events$ | async)?.length"></ion-spinner>
 
-  <ion-list *ngIf="events?.length" #listEvent>
-    <ion-item-sliding *ngFor="let event of events">
+  <ion-list *ngIf="(events$ | async)?.length" #listEvent>
+    <ion-item-sliding *ngFor="let event of (events$ | async)">
       <ion-item class="item" (click)="goToEvent(event)">
         <ion-avatar *ngIf="event" slot="start">
-          <img *ngIf="event.photo" [src]="event.photo" />
+          <img
+            *ngIf="event.photo"
+            alt="avatar"
+            [src]="!event.photo.includes('avatar') ? event.photo : (event.photo | noCache)"
+          />
           <div *ngIf="!event.photo" class="fake-photo" [attr.data-name]="event.title[0]"></div>
         </ion-avatar>
         <ion-label>

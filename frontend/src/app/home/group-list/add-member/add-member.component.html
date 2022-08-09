@@ -10,7 +10,11 @@
   <div class="content">
     <ion-item *ngFor="let friend of friends" color="none">
       <ion-avatar class="member-avatar" *ngIf="friend" slot="start">
-        <img *ngIf="friend.photo" [src]="friend.photo" />
+        <img
+          *ngIf="friend.photo"
+          alt="avatar"
+          [src]="!friend.photo.includes('avatar') ? friend.photo : (friend.photo | noCache)"
+        />
         <div *ngIf="!friend.photo" class="fake-photo" [attr.data-name]="friend.firstName[0] + friend.surname[0]"></div>
       </ion-avatar>
       <ion-label>

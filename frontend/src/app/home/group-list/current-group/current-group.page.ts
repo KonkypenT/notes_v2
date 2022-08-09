@@ -1,12 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { filter, finalize, first, takeUntil } from 'rxjs/operators';
 import { IonList, ModalController, ToastController } from '@ionic/angular';
 import { InfoAboutGroupComponent } from '../info-about-group/info-about-group.component';
 import { DOCUMENT } from '@angular/common';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { GroupService } from '../../../shared/rest/group.rest';
 import { UserState } from '../../../shared/store/user/user.state';
 import { ResetCurrentGroup, SetCurrentGroup } from '../../../shared/store/current-group/current-group.action';
@@ -18,6 +18,8 @@ import { EventService } from '../../../shared/rest/event.rest';
 import { EventsModel } from '../../../shared/models/events.model';
 import { InfoAboutEventComponent } from '../info-about-event/info-about-event.component';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
+import { SetEvents } from '../../../shared/store/events/groups.action';
+import { EventsState } from '../../../shared/store/events/groups.state';
 
 @Component({
   selector: 'app-current-group.current-group',
@@ -25,15 +27,16 @@ import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
   styleUrls: ['./current-group.page.scss'],
 })
 export class CurrentGroupPage {
+  @Select(EventsState.getEvents)
+  public events$: Observable<EventsModel[]>;
+
+  @ViewChild('listEvent') public listEvent: IonList;
+
   public titleGroup: string = '';
 
   public friends: FriendModel[] = [];
 
-  public events: EventsModel[] | null = null;
-
   public addedEventsInNativeCalendar: number[] = [];
-
-  @ViewChild('listEvent') public listEvent: IonList;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -103,14 +106,13 @@ export class CurrentGroupPage {
         finalize(() => event?.target?.complete()),
       )
       .subscribe(([group, friends, events]) => {
-        this.store.dispatch(new SetCurrentGroup(group));
+        this.store.dispatch([new SetCurrentGroup(group), new SetEvents(events)]);
         this.friends = friends;
-        this.events = events;
       });
   }
 
   public async goToEvent(event: EventsModel): Promise<void> {
-    const currentEvent = this.events.find((e) => e.id === event.id);
+    const currentEvent = this.store.selectSnapshot(EventsState.getEvents).find((e) => e.id === event.id);
     const modal = await this.modalCtrl.create({
       component: InfoAboutEventComponent,
       id: MODAL_ID.infoAboutEvent,
@@ -209,6 +211,6 @@ export class CurrentGroupPage {
     this.eventService
       .getEvents(currentGroup.id)
       .pipe(first())
-      .subscribe((result) => (this.events = result));
+      .subscribe((result) => this.store.dispatch(new SetEvents(result)));
   }
 }

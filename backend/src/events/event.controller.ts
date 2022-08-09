@@ -1,6 +1,19 @@
-import { Controller, Get, Param, Post, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Request,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { EventService } from './event.service';
 import { EventsModel } from './models/events.model';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileValidationPipe } from '../shared/pipes/file-valid.pipe';
 
 @Controller('events')
 export class EventController {
@@ -14,6 +27,20 @@ export class EventController {
   @Post('add-event-in-calendar')
   public async addEventInCalendar(@Request() req): Promise<void> {
     await this.eventsService.addEventInCalendar(req.body.id);
+  }
+
+  @Post('update-photo')
+  @UseInterceptors(FileInterceptor('photo'))
+  public async setPhoto(
+    @Query('eventId') eventId: number,
+    @UploadedFile(new FileValidationPipe())
+    file: Express.Multer.File,
+  ): Promise<void> {
+    if (!file) {
+      throw new HttpException('Unprocessable entity', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    return await this.eventsService.setPhoto(file, eventId);
   }
 
   @Get('get-events/:id')

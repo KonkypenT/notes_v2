@@ -29,6 +29,7 @@ export class GroupController {
   public async updateInfo(@Request() req): Promise<void> {
     await this.groupService.updateInfo(req.body);
   }
+
   @Post('update-photo')
   @UseInterceptors(FileInterceptor('photo'))
   public async setPhoto(

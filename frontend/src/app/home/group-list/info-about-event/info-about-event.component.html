@@ -10,9 +10,13 @@
 <ion-content>
   <div class="container">
     <form class="form" [formGroup]="form">
-      <ion-avatar class="group-avatar" *ngIf="event">
-        <img *ngIf="event.photo" [src]="event.photo" />
-        <div *ngIf="!event.photo" class="fake-photo" [attr.data-name]="event.title[0]"></div>
+      <ion-avatar *ngIf="event" class="group-avatar" (click)="showActionSheet()">
+        <img
+          *ngIf="eventPhoto"
+          alt="avatar"
+          [src]="!eventPhoto.includes('avatar') ? eventPhoto : (eventPhoto | noCache)"
+        />
+        <div *ngIf="!eventPhoto" class="fake-photo" [attr.data-name]="event.title[0]"></div>
       </ion-avatar>
       <ion-item>
         <ion-label position="floating">Название события</ion-label>
