@@ -48,4 +48,12 @@ export class GroupService {
 
     return this.httpClient.post<void>(url, data);
   }
+
+  public setPhoto(photo: Blob, groupId: number): Observable<void> {
+    const url = Urls.group.setPhoto(groupId);
+    const formData = new FormData();
+    formData.append('photo', photo);
+
+    return this.httpClient.post<void>(url, formData);
+  }
 }

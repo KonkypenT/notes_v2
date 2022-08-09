@@ -19,3 +19,8 @@ export class UpdateInfoAboutGroup {
   static readonly type = '[Current Group] Update Info About Current Group';
   constructor(public title: string, public description: string) {}
 }
+
+export class UpdateCurrentGroupPhoto {
+  static readonly type = '[Current Group] Update Photo';
+  constructor(public photo: string) {}
+}

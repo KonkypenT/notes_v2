@@ -9,6 +9,7 @@ import { GroupViewModel } from './models/group-view.model';
 import { FullInfoAboutGroupView } from './views/full-info-about-group.entity';
 import { UserModel } from '../users/user.model';
 import { FullInfoGroupModel } from './models/full-info-group.model';
+import { InjectS3, S3 } from 'nestjs-s3';
 
 @Injectable()
 export class GroupService {
@@ -16,6 +17,7 @@ export class GroupService {
     @InjectRepository(Group) private groupRepository: Repository<Group>,
     @InjectRepository(GroupView) private groupView: Repository<GroupView>,
     @InjectRepository(FullInfoAboutGroupView) private fullInfoGroupView: Repository<FullInfoAboutGroupView>,
+    @InjectS3() private readonly s3: S3,
     private membersService: MembersService,
   ) {}
 
@@ -59,6 +61,26 @@ export class GroupService {
         description,
       })
       .where('id = :id', { id: groupId })
+      .execute();
+  }
+
+  public async setPhoto(value: any, groupId: number): Promise<void> {
+    const load = await this.s3
+      .upload({
+        Bucket: 'cg11909-my-events',
+        Key: `group-${groupId}-avatar`,
+        Body: value.buffer,
+        ContentType: value.mimetype,
+      })
+      .promise();
+
+    await this.groupRepository
+      .createQueryBuilder()
+      .update()
+      .set({
+        photo: load.Location,
+      })
+      .where({ id: groupId })
       .execute();
   }
 }

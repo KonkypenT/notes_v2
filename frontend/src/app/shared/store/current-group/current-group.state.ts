@@ -4,10 +4,12 @@ import {
   AddMembersInCurrentGroup,
   ResetCurrentGroup,
   SetCurrentGroup,
+  UpdateCurrentGroupPhoto,
   UpdateInfoAboutGroup,
 } from './current-group.action';
 import { FullInfoGroupModel } from '../../models/full-info-group.model';
 import { patch } from '@ngxs/store/operators';
+import { UserModel } from '../../models/user.model';
 
 @State<FullInfoGroupModel | null>({
   name: 'currentGroup',
@@ -47,5 +49,12 @@ export class CurrentGroupState {
         description,
       }),
     );
+  }
+
+  @Action(UpdateCurrentGroupPhoto)
+  public updateUserPhoto(ctx: StateContext<UserModel | null>, { photo }: UpdateCurrentGroupPhoto): void {
+    ctx.patchState({
+      photo,
+    });
   }
 }

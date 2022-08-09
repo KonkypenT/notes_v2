@@ -11,7 +11,13 @@ import { Observable } from 'rxjs';
 import { FullInfoGroupModel } from '../../../shared/models/full-info-group.model';
 import { GroupService } from '../../../shared/rest/group.rest';
 import { first, switchMap } from 'rxjs/operators';
-import { UpdateInfoAboutGroup } from '../../../shared/store/current-group/current-group.action';
+import {
+  UpdateCurrentGroupPhoto,
+  UpdateInfoAboutGroup,
+} from '../../../shared/store/current-group/current-group.action';
+import { CameraHelperService } from '../../../shared/services/camera-helper.service';
+import { UpdateGroupPhoto } from '../../../shared/store/groups/groups.action';
+import { UserState } from '../../../shared/store/user/user.state';
 
 @Component({
   selector: 'app-info-about-group',
@@ -35,6 +41,7 @@ export class InfoAboutGroupComponent implements OnInit {
     private store: Store,
     private toastCtrl: ToastController,
     private groupService: GroupService,
+    private cameraHelperService: CameraHelperService,
   ) {}
 
   public ngOnInit(): void {
@@ -84,6 +91,22 @@ export class InfoAboutGroupComponent implements OnInit {
         });
         toast.present().then();
       });
+  }
+
+  public async showActionSheet(): Promise<void> {
+    const currentGroup = this.store.selectSnapshot(CurrentGroupState.getCurrentGroup);
+    const currentUser = this.store.selectSnapshot(UserState.getUser);
+    const currentUserIsOwner = currentGroup.ownerId === currentUser.id;
+    const result = await this.cameraHelperService.showActionSheet(currentUserIsOwner, currentUserIsOwner);
+
+    if (result?.data?.dataUrl) {
+      this.store.dispatch([
+        new UpdateCurrentGroupPhoto(result.data.dataUrl),
+        new UpdateGroupPhoto(result.data.dataUrl, currentGroup.id),
+      ]);
+      const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
+      this.groupService.setPhoto(blob, currentGroup.id).pipe(first()).subscribe();
+    }
   }
 
   private patchForm(): void {

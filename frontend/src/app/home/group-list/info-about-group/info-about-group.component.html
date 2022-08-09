@@ -10,8 +10,12 @@
 <ion-content>
   <div class="container">
     <form *ngIf="currentGroup$ | async as group" class="form" [formGroup]="form">
-      <ion-avatar class="group-avatar" *ngIf="group">
-        <img *ngIf="group.photo" [src]="group.photo" />
+      <ion-avatar *ngIf="group" class="group-avatar" (click)="showActionSheet()">
+        <img
+          *ngIf="group.photo"
+          alt="avatar"
+          [src]="!group.photo.includes('avatar') ? group.photo : (group.photo | noCache)"
+        />
         <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>
       </ion-avatar>
       <ion-item>
@@ -28,9 +32,17 @@
         <span>Добавить участников</span>
       </div>
       <ion-item *ngFor="let member of group.members" class="member" color="none">
-        <ion-avatar class="member-avatar" *ngIf="group" slot="start">
-          <img *ngIf="group.photo" [src]="group.photo" />
-          <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="member.firstName[0] + member.surname[0]"></div>
+        <ion-avatar class="member-avatar" *ngIf="member" slot="start">
+          <img
+            *ngIf="member.photo"
+            alt="avatar"
+            [src]="!member.photo.includes('avatar') ? member.photo : (member.photo | noCache)"
+          />
+          <div
+            *ngIf="!member.photo"
+            class="fake-photo"
+            [attr.data-name]="member.firstName[0] + member.surname[0]"
+          ></div>
         </ion-avatar>
         <ion-label>
           <p>{{ member.firstName }} {{ member.surname }}</p>

@@ -8,3 +8,8 @@ export class SetGroups {
 export class ResetGroups {
   static readonly type = '[Groups] Reset Groups';
 }
+
+export class UpdateGroupPhoto {
+  static readonly type = '[Groups] Update Photo';
+  constructor(public photo: string, public groupId: number) {}
+}

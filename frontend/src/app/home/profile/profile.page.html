@@ -23,7 +23,7 @@
         <img
           *ngIf="user.photo"
           alt="avatar"
-          [src]="user.photo.includes('avatar') ? user.photo + '?' + noCache : user.photo"
+          [src]="!user.photo.includes('avatar') ? user.photo : user.photo | noCache"
         />
         <div *ngIf="!user.photo" class="fake-photo" [attr.data-name]="user.firstName[0] + user.surname[0]"></div>
       </ion-avatar>

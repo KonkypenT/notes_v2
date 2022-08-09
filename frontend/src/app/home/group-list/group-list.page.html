@@ -25,7 +25,11 @@
       lines="none"
     >
       <ion-avatar *ngIf="group" slot="start">
-        <img *ngIf="group.photo" [src]="group.photo" />
+        <img
+          *ngIf="group.photo"
+          alt="avatar"
+          [src]="!group.photo.includes('avatar') ? group.photo : (group.photo | noCache)"
+        />
         <div *ngIf="!group.photo" class="fake-photo" [attr.data-name]="group.title[0]"></div>
       </ion-avatar>
       <ion-label>{{group.title}}</ion-label>

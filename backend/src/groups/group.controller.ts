@@ -1,7 +1,20 @@
-import { Controller, Get, Param, Post, Query, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Request,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { GroupService } from './group.service';
 import { GroupViewModel } from './models/group-view.model';
 import { FullInfoGroupModel } from './models/full-info-group.model';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileValidationPipe } from '../shared/pipes/file-valid.pipe';
 
 @Controller('group')
 export class GroupController {
@@ -15,6 +28,19 @@ export class GroupController {
   @Post('update-info')
   public async updateInfo(@Request() req): Promise<void> {
     await this.groupService.updateInfo(req.body);
+  }
+  @Post('update-photo')
+  @UseInterceptors(FileInterceptor('photo'))
+  public async setPhoto(
+    @Query('groupId') groupId: number,
+    @UploadedFile(new FileValidationPipe())
+    file: Express.Multer.File,
+  ): Promise<void> {
+    if (!file) {
+      throw new HttpException('Unprocessable entity', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    return await this.groupService.setPhoto(file, groupId);
   }
 
   @Get('get-groups/:id')
