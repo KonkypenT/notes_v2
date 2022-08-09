@@ -79,6 +79,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
+  public noCache(): number {
+    return Math.random();
+  }
+
   private subscribeOnCurrentUser(): void {
     this.currentUser.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => this.form.patchValue(user));
   }
