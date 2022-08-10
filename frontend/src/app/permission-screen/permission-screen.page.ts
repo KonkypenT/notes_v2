@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
-import { NavController, Platform } from '@ionic/angular';
+import { IonSlides, NavController, Platform } from '@ionic/angular';
 import { ROUTING_NAME } from '../shared/consts/routing.const';
 import { Camera } from '@capacitor/camera';
 
@@ -11,6 +11,8 @@ import { Camera } from '@capacitor/camera';
   styleUrls: ['./permission-screen.page.scss'],
 })
 export class PermissionScreenPage {
+  @ViewChild('slider') public slider: IonSlides;
+
   constructor(
     private geolocation: Geolocation,
     private calendar: Calendar,
@@ -24,6 +26,10 @@ export class PermissionScreenPage {
     await this.getPermissionToCamera();
     localStorage.setItem('visitPermissions', 'true');
     await this.goToAuthPage();
+  }
+
+  public nextSlide(): void {
+    this.slider.slideNext().then();
   }
 
   private async getPermissionToLocation(): Promise<void> {

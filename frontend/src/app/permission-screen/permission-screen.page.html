@@ -28,7 +28,7 @@
       <span style="--i: 9"></span>
     </div>
   </div>
-  <ion-slides pager="true">
+  <ion-slides pager="true" #slider>
     <ion-slide>
       <ion-card>
         <ion-card-header>
@@ -38,6 +38,10 @@
 
         <ion-card-content>
           Это приложение поможет вам планировать встречи с друзьями и различные мероприятия.
+
+          <div class="card-footer">
+            <ion-button color="primary" (click)="nextSlide()">Продолжить</ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -51,6 +55,10 @@
         <ion-card-content>
           Добавляйте друзей и планируйте события вместе. Указывайте место встречи и время, чтобы никто из ваших друзей
           не пропустил событие.
+
+          <div class="card-footer">
+            <ion-button color="primary" (click)="nextSlide()">Продолжить</ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -64,6 +72,10 @@
         <ion-card-content>
           В группах можно создавать бесконечное число событий, чтобы чаще встречаться с друзьями или планировать
           мероприятия.
+
+          <div class="card-footer">
+            <ion-button color="primary" (click)="nextSlide()">Продолжить</ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
