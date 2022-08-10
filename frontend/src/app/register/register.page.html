@@ -11,19 +11,40 @@
   <div class="container">
     <form class="form" [formGroup]="formRegister">
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="Имя" [formControl]="formRegister.controls.firstName"></ion-input>
+        <ion-input
+          autocapitalize="on"
+          enterkeyhint="next"
+          placeholder="Имя"
+          [formControl]="formRegister.controls.firstName"
+        ></ion-input>
       </ion-item>
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="Фамилия" [formControl]="formRegister.controls.surname"></ion-input>
+        <ion-input
+          autocapitalize="on"
+          enterkeyhint="next"
+          placeholder="Фамилия"
+          [formControl]="formRegister.controls.surname"
+        ></ion-input>
       </ion-item>
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="E-mail" type="email" [formControl]="formRegister.controls.email"></ion-input>
+        <ion-input
+          placeholder="E-mail"
+          enterkeyhint="next"
+          inputmode="email"
+          type="email"
+          [formControl]="formRegister.controls.email"
+        ></ion-input>
       </ion-item>
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="Логин" [formControl]="formRegister.controls.username"></ion-input>
+        <ion-input placeholder="Логин" enterkeyhint="next" [formControl]="formRegister.controls.username"></ion-input>
       </ion-item>
       <ion-item class="input-radius" lines="none">
-        <ion-input placeholder="Пароль" type="password" [formControl]="formRegister.controls.password"></ion-input>
+        <ion-input
+          placeholder="Пароль"
+          enterkeyhint="done"
+          type="password"
+          [formControl]="formRegister.controls.password"
+        ></ion-input>
         <ion-label
           *ngIf="formRegister.controls.password.value && formRegister.getError('passwordInvalid')"
           class="error"

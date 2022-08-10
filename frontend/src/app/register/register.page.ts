@@ -31,10 +31,16 @@ export class RegisterPage {
   public async register(): Promise<void> {
     this.registerError = '';
     const { firstName, surname, email, username, password } = this.formRegister.value;
-    const formatName = username.toLowerCase();
+    const formatName = username.toLowerCase().trim();
 
     this.authService
-      .register({ firstName, surname, email, username: formatName, password })
+      .register({
+        firstName: firstName.trim(),
+        surname: surname.trim(),
+        email: email.trim(),
+        username: formatName,
+        password,
+      })
       .pipe(
         first(),
         catchError((error) => {

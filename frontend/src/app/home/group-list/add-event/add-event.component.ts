@@ -48,7 +48,7 @@ export class AddEventComponent {
   public createEvent(): void {
     const currentGroup = this.store.selectSnapshot(CurrentGroupState.getCurrentGroup);
     const data = {
-      title: this.form.value.title,
+      title: this.form.value.title.trim(),
       eventDate: this.form.value.eventDate,
       placeEvent: this.form.value.placeEvent,
       endDate: this.form.value.endDate,

@@ -26,7 +26,7 @@ export class CreateGroupComponent {
   public createGroup(): void {
     const currentUser = this.store.selectSnapshot(UserState.getUser);
     const data: GroupModel = {
-      title: this.form.controls.title.value,
+      title: this.form.controls.title.value.trim(),
       createDate: new Date(),
       isActive: true,
       ownerId: currentUser.id,

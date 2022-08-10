@@ -41,8 +41,8 @@ export class GroupService {
   public updateInfoAboutGroup(title: string, description: string, groupId): Observable<void> {
     const url = Urls.group.updateInfo;
     const data = {
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       groupId,
     };
 

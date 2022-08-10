@@ -51,9 +51,11 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   public save(): void {
+    const { id, username, surname, firstName, email } = this.form.value;
+
     this.error = '';
     this.userService
-      .edit(this.form.value)
+      .edit({ id, username, surname: surname.trim(), firstName: firstName.trim(), email })
       .pipe(
         first(),
         catchError((error) => {

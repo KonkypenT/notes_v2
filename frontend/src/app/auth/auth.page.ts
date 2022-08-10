@@ -34,7 +34,7 @@ export class AuthPage {
 
     this.sendRequestAuth = true;
     const { username, password } = this.formAuth.value;
-    const formatName = username.toLowerCase();
+    const formatName = username.toLowerCase().trim();
 
     this.authService
       .auth({ username: formatName, password })
