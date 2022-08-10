@@ -6,4 +6,5 @@ export const MODAL_ID = {
   infoAboutEvent: 'infoAboutEvent',
   modalMap: 'modalMap',
   searchMap: 'searchMap',
+  imagePreview: 'imagePreview',
 };

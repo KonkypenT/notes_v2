@@ -72,7 +72,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   public async showActionSheet(): Promise<void> {
-    const result = await this.cameraHelperService.showActionSheet();
+    const currentUser = this.store.selectSnapshot(UserState.getUser);
+    const result = await this.cameraHelperService.showActionSheet(currentUser.photo);
+
     if ((result.role === ActionCameraType.Camera || ActionCameraType.Gallery) && result?.data?.dataUrl) {
       this.store.dispatch(new UpdateUserPhoto(result.data.dataUrl));
       const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());

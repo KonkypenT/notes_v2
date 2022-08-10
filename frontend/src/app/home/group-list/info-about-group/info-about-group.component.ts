@@ -98,7 +98,11 @@ export class InfoAboutGroupComponent implements OnInit {
     const currentGroup = this.store.selectSnapshot(CurrentGroupState.getCurrentGroup);
     const currentUser = this.store.selectSnapshot(UserState.getUser);
     const currentUserIsOwner = currentGroup.ownerId === currentUser.id;
-    const result = await this.cameraHelperService.showActionSheet(currentUserIsOwner, currentUserIsOwner);
+    const result = await this.cameraHelperService.showActionSheet(
+      currentGroup.photo || null,
+      currentUserIsOwner,
+      currentUserIsOwner,
+    );
 
     if (result?.data?.dataUrl) {
       this.store.dispatch([

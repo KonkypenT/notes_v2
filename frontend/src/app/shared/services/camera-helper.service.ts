@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { ChoosePhotoModel } from '../models/choose-photo.model';
 import { ActionSheetButton } from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
 import { ActionCameraType } from '../enums/action-camera.enum';
+import { MODAL_ID } from '../consts/modal-id.const';
+import { ImageModalComponent } from '../components/image-modal/image-modal.component';
+import { imageUrlToBase64 } from '../functions/image-url-to-base64.function';
 
 @Injectable({ providedIn: 'root' })
 export class CameraHelperService {
   private actionSheet: HTMLIonActionSheetElement;
 
-  constructor(private actionSheetCtrl: ActionSheetController) {}
+  constructor(private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController) {}
 
-  public async showActionSheet(canDeletePhoto: boolean = true, canAddPhoto: boolean = true): Promise<ChoosePhotoModel> {
+  public async showActionSheet(
+    photo?: string,
+    canDeletePhoto: boolean = true,
+    canAddPhoto: boolean = true,
+  ): Promise<ChoosePhotoModel> {
     const buttons: ActionSheetButton[] = [];
 
-    canDeletePhoto && buttons.push(this.createDeleteButton());
+    photo && buttons.push(this.createShowPreviewButton(photo));
     canAddPhoto && buttons.push(...this.createAddButtons());
+    canDeletePhoto && buttons.push(this.createDeleteButton());
 
     this.actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         ...buttons,
         {
           text: 'Отмена',
-          role: 'cancel',
+          role: ActionCameraType.Cancel,
         },
       ],
     });
@@ -69,5 +77,30 @@ export class CameraHelperService {
         },
       },
     ];
+  }
+
+  private createShowPreviewButton(photo: string): ActionSheetButton {
+    return {
+      text: 'Посмотреть фото',
+      role: ActionCameraType.View,
+      handler: async () => {
+        this.actionSheet.dismiss('', ActionCameraType.View);
+        await this.showPreviewModal(photo);
+      },
+    };
+  }
+
+  private async showPreviewModal(photo: string): Promise<void> {
+    await imageUrlToBase64(photo, async (dataUrl) => {
+      const modal = await this.modalCtrl.create({
+        id: MODAL_ID.imagePreview,
+        component: ImageModalComponent,
+        componentProps: {
+          photo: dataUrl,
+        },
+      });
+
+      await modal.present();
+    });
   }
 }
