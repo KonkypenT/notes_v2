@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -42,6 +43,11 @@ export class GroupController {
     }
 
     return await this.groupService.setPhoto(file, groupId);
+  }
+
+  @Delete('delete-photo')
+  public async deletePhoto(@Query('groupId') groupId: number): Promise<void> {
+    return await this.groupService.deletePhoto(groupId);
   }
 
   @Get('get-groups/:id')

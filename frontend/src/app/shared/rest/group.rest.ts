@@ -56,4 +56,10 @@ export class GroupService {
 
     return this.httpClient.post<void>(url, formData);
   }
+
+  public deletePhoto(groupId: number): Observable<void> {
+    const url = Urls.group.deletePhoto(groupId);
+
+    return this.httpClient.delete<void>(url);
+  }
 }

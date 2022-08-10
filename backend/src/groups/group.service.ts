@@ -83,4 +83,9 @@ export class GroupService {
       .where({ id: groupId })
       .execute();
   }
+
+  public async deletePhoto(groupId: number): Promise<void> {
+    await this.s3.deleteObject({ Bucket: 'cg11909-my-events', Key: `group-${groupId}-avatar` }).promise();
+    await this.groupRepository.createQueryBuilder().update().set({ photo: null }).where({ id: groupId }).execute();
+  }
 }

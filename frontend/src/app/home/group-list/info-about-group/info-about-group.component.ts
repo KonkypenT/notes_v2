@@ -18,6 +18,7 @@ import {
 import { CameraHelperService } from '../../../shared/services/camera-helper.service';
 import { UpdateGroupPhoto } from '../../../shared/store/groups/groups.action';
 import { UserState } from '../../../shared/store/user/user.state';
+import { ActionCameraType } from '../../../shared/enums/action-camera.enum';
 
 @Component({
   selector: 'app-info-about-group',
@@ -106,6 +107,11 @@ export class InfoAboutGroupComponent implements OnInit {
       ]);
       const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
       this.groupService.setPhoto(blob, currentGroup.id).pipe(first()).subscribe();
+    }
+
+    if (result.role === ActionCameraType.Destructive) {
+      this.store.dispatch([new UpdateGroupPhoto(null, currentGroup.id), new UpdateCurrentGroupPhoto(null)]);
+      this.groupService.deletePhoto(currentGroup.id).pipe(first()).subscribe();
     }
   }
 

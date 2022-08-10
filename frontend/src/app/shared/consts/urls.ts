@@ -30,6 +30,7 @@ export class Urls {
     getGroups: (userId: number): string => `${environment.baseUrl}/group/get-groups/${userId}`,
     getCurrentGroup: (groupId: number): string => `${environment.baseUrl}/group/get-current-group?groupId=${groupId}`,
     setPhoto: (groupId: number): string => `${environment.baseUrl}/group/update-photo?groupId=${groupId}`,
+    deletePhoto: (groupId: number): string => `${environment.baseUrl}/group/delete-photo?groupId=${groupId}`,
     addGroup: `${environment.baseUrl}/group/add-group`,
     updateInfo: `${environment.baseUrl}/group/update-info`,
   };
