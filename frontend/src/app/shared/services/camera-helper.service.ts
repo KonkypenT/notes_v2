@@ -3,6 +3,7 @@ import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capaci
 import { ActionSheetController } from '@ionic/angular';
 import { ChoosePhotoModel } from '../models/choose-photo.model';
 import { ActionSheetButton } from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
+import { ActionCameraType } from '../enums/action-camera.enum';
 
 @Injectable({ providedIn: 'root' })
 export class CameraHelperService {
@@ -35,13 +36,9 @@ export class CameraHelperService {
   private createDeleteButton(): ActionSheetButton {
     return {
       text: 'Удалить',
-      role: 'destructive',
-      id: 'delete-button',
-      data: {
-        type: 'delete',
-      },
-      handler: () => {
-        console.log('Delete clicked');
+      role: ActionCameraType.Destructive,
+      handler: async () => {
+        await this.actionSheet.dismiss('', ActionCameraType.Destructive);
       },
     };
   }
@@ -57,19 +54,18 @@ export class CameraHelperService {
             presentationStyle: 'fullscreen',
             source: CameraSource.Camera,
           });
-          await this.actionSheet.dismiss(camera, 'camera');
+          await this.actionSheet.dismiss(camera, ActionCameraType.Camera);
         },
       },
       {
         text: 'Выбрать фото',
-        data: 'galery',
         handler: async () => {
           const photo = await Camera.getPhoto({
             resultType: CameraResultType.DataUrl,
             presentationStyle: 'fullscreen',
             source: CameraSource.Photos,
           });
-          await this.actionSheet.dismiss(photo, 'galery');
+          await this.actionSheet.dismiss(photo, ActionCameraType.Gallery);
         },
       },
     ];

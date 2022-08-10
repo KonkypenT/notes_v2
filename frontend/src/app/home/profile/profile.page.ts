@@ -11,7 +11,8 @@ import { ROUTING_NAME } from '../../shared/consts/routing.const';
 import { UserModel } from '../../shared/models/user.model';
 import { resetStore } from '../../shared/functions/reset-store.function';
 import { CameraHelperService } from 'src/app/shared/services/camera-helper.service';
-import { UpdateUserPhoto } from '../../shared/store/user/user.action';
+import { SetUser, UpdateUserPhoto } from '../../shared/store/user/user.action';
+import { ActionCameraType } from '../../shared/enums/action-camera.enum';
 
 @Component({
   selector: 'app-profile',
@@ -72,10 +73,20 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   public async showActionSheet(): Promise<void> {
     const result = await this.cameraHelperService.showActionSheet();
-    if (result?.data?.dataUrl) {
+    if ((result.role === ActionCameraType.Camera || ActionCameraType.Gallery) && result?.data?.dataUrl) {
       this.store.dispatch(new UpdateUserPhoto(result.data.dataUrl));
       const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
       this.userService.setPhoto(blob).pipe(first()).subscribe();
+    }
+
+    if (result.role === ActionCameraType.Destructive) {
+      this.store.dispatch(new UpdateUserPhoto(null));
+      this.userService
+        .deletePhoto()
+        .pipe(first())
+        .subscribe((result) => {
+          this.store.dispatch(new SetUser(result));
+        });
     }
   }
 

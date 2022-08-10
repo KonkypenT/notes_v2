@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -38,6 +39,12 @@ export class UserController {
       throw new HttpException('Unprocessable entity', HttpStatus.UNPROCESSABLE_ENTITY);
     }
     return await this.userService.setPhoto(file, req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete-photo')
+  public async deletePhoto(@Request() req): Promise<Partial<UserModel>> {
+    return await this.userService.deletePhoto(req.user);
   }
 
   @Get(':value')

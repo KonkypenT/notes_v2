@@ -20,11 +20,17 @@ export class UserService {
     return this.httpClient.get<Partial<UserModel[]>>(url);
   }
 
-  public setPhoto(photo: Blob): Observable<Partial<UserModel>> {
+  public deletePhoto(): Observable<UserModel> {
+    const url = Urls.profile.deletePhoto;
+
+    return this.httpClient.delete<UserModel>(url);
+  }
+
+  public setPhoto(photo: Blob): Observable<void> {
     const url = Urls.profile.setPhoto;
     const formData = new FormData();
     formData.append('photo', photo);
 
-    return this.httpClient.post<Partial<UserModel>>(url, formData);
+    return this.httpClient.post<void>(url, formData);
   }
 }

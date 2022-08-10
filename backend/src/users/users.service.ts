@@ -33,6 +33,7 @@ export class UsersService {
       id: data.id,
       surname: data.surname,
       username: data.username,
+      photo: data.photo,
     };
   }
 
@@ -71,5 +72,19 @@ export class UsersService {
       })
       .where({ id: user.id })
       .execute();
+  }
+
+  public async deletePhoto(user: Partial<UserModel>): Promise<Partial<UserModel>> {
+    await this.s3.deleteObject({ Bucket: 'cg11909-my-events', Key: `${user.id}-avatar` }).promise();
+    await this.usersRepository.createQueryBuilder().update().set({ photo: null }).where({ id: user.id }).execute();
+    const findUser = await this.usersRepository.findOneBy({ id: user.id });
+    return {
+      id: findUser.id,
+      firstName: findUser.firstName,
+      username: findUser.username,
+      surname: findUser.surname,
+      email: findUser.email,
+      photo: findUser.photo,
+    };
   }
 }
