@@ -42,6 +42,7 @@ export class Urls {
   public static events = {
     getEvents: (groupId: number): string => `${environment.baseUrl}/events/get-events/${groupId}`,
     setPhoto: (eventId: number): string => `${environment.baseUrl}/events/update-photo?eventId=${eventId}`,
+    deletePhoto: (eventId: number): string => `${environment.baseUrl}/events/delete-photo?eventId=${eventId}`,
     addEvent: `${environment.baseUrl}/events/add-event`,
     addEventInCalendar: `${environment.baseUrl}/events/add-event-in-calendar`,
   };

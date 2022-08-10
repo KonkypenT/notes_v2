@@ -39,4 +39,10 @@ export class EventService {
 
     return this.httpClient.post<void>(url, formData);
   }
+
+  public deletePhoto(groupId: number): Observable<void> {
+    const url = Urls.events.deletePhoto(groupId);
+
+    return this.httpClient.delete<void>(url);
+  }
 }

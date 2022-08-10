@@ -64,4 +64,9 @@ export class EventService {
       .where({ id: eventId })
       .execute();
   }
+
+  public async deletePhoto(eventId: number): Promise<void> {
+    await this.s3.deleteObject({ Bucket: 'cg11909-my-events', Key: `event-${eventId}-avatar` }).promise();
+    await this.eventRepository.createQueryBuilder().update().set({ photo: null }).where({ id: eventId }).execute();
+  }
 }

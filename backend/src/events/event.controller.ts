@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -41,6 +42,11 @@ export class EventController {
     }
 
     return await this.eventsService.setPhoto(file, eventId);
+  }
+
+  @Delete('delete-photo')
+  public async deletePhoto(@Query('eventId') groupId: number): Promise<void> {
+    return await this.eventsService.deletePhoto(groupId);
   }
 
   @Get('get-events/:id')

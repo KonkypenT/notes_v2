@@ -10,6 +10,7 @@ import { Store } from '@ngxs/store';
 import { CameraHelperService } from '../../../shared/services/camera-helper.service';
 import { EventService } from '../../../shared/rest/event.rest';
 import { UpdateEventPhoto } from '../../../shared/store/events/groups.action';
+import { ActionCameraType } from '../../../shared/enums/action-camera.enum';
 
 @Component({
   selector: 'app-info-about-event',
@@ -54,6 +55,12 @@ export class InfoAboutEventComponent implements OnInit {
       this.eventPhoto = result?.data?.dataUrl;
       const blob = await fetch(result?.data?.dataUrl).then((res) => res.blob());
       this.eventsService.setPhoto(blob, this.event.id).pipe(first()).subscribe();
+    }
+
+    if (result.role === ActionCameraType.Destructive) {
+      this.store.dispatch(new UpdateEventPhoto(null, currentGroup.id));
+      this.eventPhoto = null;
+      this.eventsService.deletePhoto(this.event.id).pipe(first()).subscribe();
     }
   }
 
