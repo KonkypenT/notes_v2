@@ -40,12 +40,13 @@
         slot="end"
         (click)="showSettingsGroup($event)"
       ></ion-icon>
-      <ion-popover [trigger]="'left-start-' + index" side="left" alignment="center" [dismissOnSelect]="true">
+      <ion-popover [trigger]="'left-start-' + index" side="bottom" alignment="center" [dismissOnSelect]="true">
         <ng-template>
           <ion-content>
             <ion-list>
-              <ion-item [button]="true" [detail]="false" lines="none">Удалить группу</ion-item>
-              <ion-item [button]="true" [detail]="false" lines="none">Выйти из группы</ion-item>
+              <ion-item lines="none" class="popover-item" [button]="true" [detail]="false">Удалить группу</ion-item>
+              <ion-item lines="none" class="popover-item" [button]="true" [detail]="false">Выйти из группы</ion-item>
+              <ion-item lines="none" class="popover-item" [button]="true" [detail]="false">Настройки группы</ion-item>
             </ion-list>
           </ion-content>
         </ng-template>

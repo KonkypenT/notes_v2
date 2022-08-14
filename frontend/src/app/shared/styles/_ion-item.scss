@@ -3,13 +3,13 @@
 }
 
 @media (prefers-color-scheme: light) {
-  .ion-item-radius {
+  .ion-item-radius, .popover-item {
     --background: #f8f8fB;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .ion-item-radius {
+  .ion-item-radius, .popover-item {
     --background: #1e1e1e;
   }
 }
