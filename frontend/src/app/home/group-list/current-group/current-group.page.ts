@@ -1,8 +1,8 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { filter, finalize, first, takeUntil } from 'rxjs/operators';
-import { IonList, ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAboutGroupComponent } from '../info-about-group/info-about-group.component';
 import { DOCUMENT } from '@angular/common';
 import { MODAL_ID } from '../../../shared/consts/modal-id.const';
@@ -30,15 +30,13 @@ export class CurrentGroupPage {
   @Select(EventsState.getEvents)
   public events$: Observable<EventsModel[]>;
 
-  @ViewChild('listEvent') public listEvent: IonList;
-
   public titleGroup: string = '';
 
   public friends: FriendModel[] = [];
 
-  public addedEventsInNativeCalendar: number[] = [];
-
   private unsubscribe$ = new Subject<void>();
+
+  private readonly calendarName = 'Мои события';
 
   constructor(
     @Inject(DOCUMENT) private readonly documentRef: Document,
@@ -125,24 +123,28 @@ export class CurrentGroupPage {
     modal.present();
   }
 
-  public async addToCalendar(event: EventsModel): Promise<void> {
+  public async addToCalendar(event: EventsModel): Promise<void> {   
+    const eventInCalendar = await this.checkCurrentEventInCalendar(event);
+
+    if (eventInCalendar) {
+      return;
+    }
+
     const startDate = new Date(event.eventDate.toString().split('T')[0]);
     const endDate = new Date(event.endDate.toString().split('T')[0]);
 
-    this.calendar.createCalendar({ calendarName: 'Мои события', calendarColor: '#00e676' }).then(
+    this.calendar.createCalendar({ calendarName: this.calendarName, calendarColor: '#00e676' }).then(
       async () => {
         const calendars = await this.calendar.listCalendars();
-        const myCalendar = calendars.find((c) => c.name === 'Мои события');
+        const myCalendar = calendars.find((c) => c.name === this.calendarName);
         this.calendar
           .createEventWithOptions(event.title, event.placeEvent, '', startDate, endDate, {
-            calendarName: 'Мои события',
+            calendarName: this.calendarName,
             calendarId: myCalendar,
           })
           .then(
             () => {
               this.eventService.addEventInCalendar(event.id).pipe(first()).subscribe();
-              this.listEvent.closeSlidingItems().then();
-              this.addedEventsInNativeCalendar = [...this.addedEventsInNativeCalendar, event.id];
               this.showToastAboutAddEventInCalendar();
             },
             (err) => {
@@ -156,8 +158,8 @@ export class CurrentGroupPage {
     );
   }
 
-  public getEventIdFromNativeCalendar(eventId: number): boolean {
-    return !!this.addedEventsInNativeCalendar.find((e) => e === eventId);
+  public async showSettingsGroup(event: Event): Promise<void> {
+    event.stopPropagation();
   }
 
   private subscribeOnCurrentGroup(): void {
@@ -212,5 +214,23 @@ export class CurrentGroupPage {
       .getEvents(currentGroup.id)
       .pipe(first())
       .subscribe((result) => this.store.dispatch(new SetEvents(result)));
+  }
+
+  private async checkCurrentEventInCalendar(event: EventsModel): Promise<boolean> {
+    const eventsInCalendar = await this.calendar.findAllEventsInNamedCalendar(this.calendarName);
+    
+    const mapEvent = {
+      title: event.title,
+      location: event.placeEvent,
+    };
+
+    const mapEventsInCalendar = eventsInCalendar.map((e) => {
+      return {
+        title: e.title,
+        location: e.location,
+      }
+    })
+    
+    return mapEventsInCalendar.some((e) => JSON.stringify(e) === JSON.stringify(mapEvent));
   }
 }

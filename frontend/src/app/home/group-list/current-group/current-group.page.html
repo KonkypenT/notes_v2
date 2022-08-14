@@ -18,9 +18,9 @@
 
   <ion-spinner name="crescent" *ngIf="!(events$ | async)?.length"></ion-spinner>
 
-  <ion-list *ngIf="(events$ | async)?.length" #listEvent>
-    <ion-item-sliding *ngFor="let event of (events$ | async)">
-      <ion-item class="item" (click)="goToEvent(event)">
+  <ng-container *ngIf="(events$ | async) as events">
+    <ion-list *ngIf="events?.length">
+      <ion-item *ngFor="let event of (events$ | async); let index = index" class="item" lines="none" (click)="goToEvent(event)">
         <ion-avatar *ngIf="event" slot="start">
           <img
             *ngIf="event.photo"
@@ -34,16 +34,23 @@
           <p>Дата - {{event.eventDate | date: 'dd.MM.yyyy'}}</p>
           <p>Место - {{event.placeEvent}}</p>
         </ion-label>
+        <ion-icon
+          [id]="'bottom-start-' + index"
+          class="settings"
+          name="ellipsis-vertical-outline"
+          slot="end"
+          (click)="showSettingsGroup($event)"
+        ></ion-icon>
+        <ion-popover [trigger]="'bottom-start-' + index" side="bottom" alignment="center" [dismissOnSelect]="true">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item lines="none" class="popover-item" [button]="true" [detail]="false" (click)="addToCalendar(event)">В календарь</ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-item>
-      <ion-item-options side="start">
-        <ion-item-option
-          color="primary"
-          (click)="addToCalendar(event)"
-          [disabled]="getEventIdFromNativeCalendar(event.id)"
-        >
-          Добавить в календарь
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+    </ion-list>
+  </ng-container>
 </ion-content>

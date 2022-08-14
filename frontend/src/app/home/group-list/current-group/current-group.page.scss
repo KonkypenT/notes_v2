@@ -1,5 +1,13 @@
 @import 'spinner';
 
+.settings {
+  transition: 0.4s;
+
+  &:active {
+    opacity: 0.4;
+  }
+}
+
 ion-avatar {
   width: 48px;
   height: 48px;
