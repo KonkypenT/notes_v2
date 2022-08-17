@@ -123,7 +123,7 @@ export class CurrentGroupPage {
     modal.present();
   }
 
-  public async addToCalendar(event: EventsModel): Promise<void> {   
+  public async addToCalendar(event: EventsModel): Promise<void> {
     const eventInCalendar = await this.checkCurrentEventInCalendar(event);
 
     if (eventInCalendar) {
@@ -218,7 +218,7 @@ export class CurrentGroupPage {
 
   private async checkCurrentEventInCalendar(event: EventsModel): Promise<boolean> {
     const eventsInCalendar = await this.calendar.findAllEventsInNamedCalendar(this.calendarName);
-    
+
     const mapEvent = {
       title: event.title,
       location: event.placeEvent,
@@ -228,9 +228,9 @@ export class CurrentGroupPage {
       return {
         title: e.title,
         location: e.location,
-      }
-    })
-    
+      };
+    });
+
     return mapEventsInCalendar.some((e) => JSON.stringify(e) === JSON.stringify(mapEvent));
   }
 }

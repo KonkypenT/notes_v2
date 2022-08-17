@@ -20,7 +20,12 @@
 
   <ng-container *ngIf="(events$ | async) as events">
     <ion-list *ngIf="events?.length">
-      <ion-item *ngFor="let event of (events$ | async); let index = index" class="item" lines="none" (click)="goToEvent(event)">
+      <ion-item
+        *ngFor="let event of (events$ | async); let index = index"
+        class="item"
+        lines="none"
+        (click)="goToEvent(event)"
+      >
         <ion-avatar *ngIf="event" slot="start">
           <img
             *ngIf="event.photo"
@@ -45,7 +50,15 @@
           <ng-template>
             <ion-content>
               <ion-list>
-                <ion-item lines="none" class="popover-item" [button]="true" [detail]="false" (click)="addToCalendar(event)">В календарь</ion-item>
+                <ion-item
+                  lines="none"
+                  class="popover-item"
+                  [button]="true"
+                  [detail]="false"
+                  (click)="addToCalendar(event)"
+                >
+                  В календарь
+                </ion-item>
               </ion-list>
             </ion-content>
           </ng-template>
